@@ -1,0 +1,391 @@
+html {
+    --color1: #4CAF50;
+    --color2: #3e8e41;
+    --color3: #307032;
+    --color4: #295d2a;
+    --white: #f2f2f2;
+    --black: #333;
+    --blackTransparent: #33333380;
+    cursor: default;
+    user-select: none;
+}
+
+body {
+    background-color: var(--white);
+    font-family: arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+}
+
+br {
+    content: "";
+    margin: 2em;
+    display: block;
+    font-size: 24%;
+}
+
+::placeholder {
+    color: var(--color4);
+    text-align: center;
+} ::-ms-input-placeholder {
+    color: var(--color4);
+    text-align: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+}
+
+h1 {
+    margin-top: 80px;
+    padding-top: 20px;
+}
+
+button {
+    display: inline-block;
+    background-color: var(--color1);
+    border: none;
+    border-radius: 5px;
+    color: var(--white);
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px;
+    margin-top: 8px;
+    cursor: pointer;
+    overflow: hidden;
+} button:hover {
+    background: var(--color2);
+} input {
+    color: var(--white);
+    width: 100%;
+    height: 32px;
+    margin: 0px;
+    border: none;
+    background-color: var(--color1);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 12px 8px;
+    border-radius: 5px;
+    box-shadow: 0 4px 16px 2px rgba(0,0,0,0.2);
+    transition: box-shadow 0.8s ease;
+    user-select: text;
+} input:focus {
+    outline: none;
+    box-shadow: 0 4px 16px 2px rgba(0,0,0,0.55);
+    transition: box-shadow 0.8s ease;
+}
+
+.zone {
+    text-align: center;
+}
+
+.navbar {
+    position: fixed;
+    display: inline-block;
+    top: 0;
+    background-color: var(--black);
+    width: 100%;
+    padding: 16px;
+    overflow: hidden;
+} .navbar div {
+    float: left;
+    color: var(--white);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+} .navbar div:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.homeWrap {
+    display: none;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 12px;
+    margin: 16px;
+    padding: 8px;
+    padding-top: 8px;
+    height: fit-content;
+} .homeWrap .homeWrap2 {
+    background-color: var(--color1);
+    color: var(--white);
+    border-radius: 12px;
+    margin: 8px;
+    padding: 16px;
+    padding-top: 8px;
+    width: 256px;
+} .homeWrap .homeWrap2:hover {
+    background: var(--color2);
+    cursor: pointer;
+} .homeWrap [name='homeWrapToggle'] {
+    display: none;
+} .homeWrap [name='homeWrapToggle'] p {
+    margin-top: 12px;
+    margin-bottom: -4px;
+} .homeWrap .homeTitle {
+    font-weight: 700;
+    font-size: 24px;
+    margin: 8px;
+} .homeWrap p {
+    margin: 0;
+    margin-bottom: -8px;
+}
+
+#widgetButtonContainer {
+    display: flex;
+} .circleButton {
+    position: fixed;
+    display: inline-block;
+    background-color: var(--color2);
+    text-align: center;
+    color: var(--color4);
+    height: 32px;
+    width: 32px;
+    margin: 0;
+    bottom: 16px;
+    right: 16px;
+    padding: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+} .circleButton:hover {
+    background-color: var(--color4);
+    color: var(--white);
+} .innerCircleButton {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--color1);
+    color: inherit;
+    text-align: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+} #statsOpen {
+    color: var(--white);
+} #hexOpen {
+    color: var(--white);
+    transform: translate(-44px, 0);
+} #hexClose {
+    transform: translate(-44px, 0);
+}
+
+
+#menuContainer {
+    position: sticky;
+    height: max-content;
+    width: 380px;
+    background-color: var(--black);
+    margin: 32px;
+    padding: 8px;
+    border-radius: 12px;
+    grid-row: 1;
+    grid-column: 3;
+} #menuForm {
+    text-align: center;
+    background-color: inherit;
+    margin: 0;
+    padding: 16px 32px;
+    border-radius: inherit;
+} #menuForm #menuTitle {
+    color: var(--white);
+    font-size: 32px;
+    font-family: serif;
+    font-weight: 500;
+    padding: -16px;
+    margin: 0;
+    margin-top: -4px;
+} #menuForm #menuDescription {
+    color: var(--white);
+    font-size: 12px;
+    padding: -16px;
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+} #menuForm button {
+    margin-top: 4px;
+} #menuForm input {
+    margin: 0;
+    margin-top: 4px;
+}
+
+#statsContainer {
+    position: sticky;
+    height: max-content;
+    width: 380px;
+    background-color: var(--black);
+    margin: 32px;
+    padding: 8px;
+    border-radius: 12px;
+    grid-row: 1;
+    grid-column: 2;
+} #statsForm {
+    text-align: left;
+    background-color: inherit;
+    margin: 0;
+    padding: 16px 32px;
+    border-radius: inherit;
+} #statsForm #statsTitle {
+    color: var(--white);
+    font-size: 32px;
+    font-family: serif;
+    font-weight: 500;
+    padding: -16px;
+    margin: 0;
+} .statsZone p {
+    display: inline-block;
+    color: var(--white);
+    margin: 0;
+    margin-top: 1px;
+    margin-bottom: 4px;
+    white-space: pre;
+    user-select: text;
+} .description {
+    font-size: 12px;
+} #statsForm .description {
+    margin-top: -4px;
+    margin-bottom: 8px;
+} .statsDescriptor {
+    font-weight: 550;
+    padding-left: 28px;
+} #statsForm button {
+    margin: 0px;
+    margin-bottom: 4px;
+    width: 100%;
+} #statsform input {
+    margin: 0;
+    margin-top: 4px;
+} #statsStake {
+    text-align: right;
+}
+
+#hexContainer {
+    position: sticky;
+    height: max-content;
+    width: 380px;
+    background-color: var(--black);
+    margin: 32px;
+    padding: 8px;
+    border-radius: 12px;
+    grid-row: 1;
+    grid-column: 1;
+} #hexForm {
+    text-align: center;
+    background-color: inherit;
+    margin: 0;
+    padding: 16px 32px;
+    border-radius: inherit;
+} #hexForm input {
+    margin-bottom: 8px;
+} #hexFilterButton {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 8px;
+} .hexTable {
+    width: 100%;
+    border-collapse: collapse;
+} .hexTable tr {
+    text-align: left;
+} .hexTable th {
+    color: var(--color1);
+    margin-top: 40px;
+    padding: 4px;
+} .hexTable td {
+    color: var(--white);
+    font-size: 12px;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    overflow: hidden;
+    user-select: text;
+} .hexCenter {
+    text-align: center;
+} .hexRight {
+    text-align: right;
+}
+
+.chart {
+    display: block;
+    left: 0px;
+    top: 100px;
+    margin: 0;
+    margin-bottom: -8px;
+    width: 16px;
+    height: 16px;
+    transform: translate(0, 10px);
+} .circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--white);
+    background: conic-gradient(var(--color1) 0 var(--deg), var(--white) var(--deg));
+    overflow: hidden;
+} .innerCircle {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    position: relative;
+    top: 8%;
+    left: 8%;
+    width: 84%;
+    height: 84%;
+    border-radius: 50%;
+    background-color: var(--black);
+} #stakePerSupply {
+    --deg: 0deg;
+} #stakePerTotal {
+    --deg: 0deg;
+} #unstakableUser {
+    --deg: 0deg;
+} #rewardsPerTotal {
+    --deg: 0deg;
+} #allowancePerBalance {
+    --deg: 0deg;
+} #connectionsPerMost {
+    --deg: 0deg;
+} #tokensEarnedPerMost {
+    --deg: 0deg;
+} #hasAffiliate {
+    --deg: 0deg;
+} #unlockablePercentChart {
+    --deg: 0deg;
+} #voteYayPerTotal {
+    --deg: 0deg;
+} #lockerContractCircle {
+    --deg: 0deg;
+} #lockerFunctionCircle {
+    --deg: 0deg;
+} #eventBlockCircle {
+    --deg: 0deg;
+}
+
+#widgetGrid {
+    position: absolute;
+    display: grid;
+    grid-auto-columns: minmax(auto, auto);
+    grid-auto-rows: minmax(auto, auto);
+} #homeGrid {
+    position: absolute;
+    display: grid;
+    grid-auto-columns: minmax(auto, auto);
+    grid-auto-rows: minmax(auto, auto);
+}
