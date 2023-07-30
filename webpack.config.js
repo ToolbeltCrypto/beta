@@ -6,5 +6,5 @@ module.exports = {
     publicPath: '',
     filename: 'main.js'
     },
-    mode: 'development'
+    mode: 'production'
 };
