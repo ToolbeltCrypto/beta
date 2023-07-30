@@ -25,17 +25,17 @@ var wallet;
 var chainID;
 
 /* WALLET */
-var privateKeys = ['x', 'y'];
+var privateKeys = ['z', 'z'];
 
 // matic
-// const alchemyApiKey = 'LXbnVYmmcd61jCBn-ou3Bs-It4S7xGGI';
+// const alchemyApiKey = 'z';
 // const provider = new ethers.providers.AlchemyProvider('maticmum', alchemyApiKey);
 export var WETH = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889';
 let swapRouter = '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
 let contracts = ['0xBAd686653c8DB9F2473b94950b1A8bCF258b8b85', '0xC7c5b5EeCd742914161e34237AD9322C45bcE5B1', '0x67742481C127cc75c59A4feD1Ae6282264670552', '0xdD9c9C0B37a016A9246FA729dcB11Acde44dFBe3', '0x9a4d565B568D4717AfD168De27c6b6308570FBA4', '0x7bD4983306522deC9065cf3C51C6040d948Eb731'];
 
 // bsc
-// const provider = new ethers.providers.JsonRpcProvider('https://aged-maximum-market.bsc-testnet.discover.quiknode.pro/5247e3b032499ecc7dc491a0002cf208daef85a9/');
+// const provider = new ethers.providers.JsonRpcProvider('z');
 // export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
 // let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1';
 // let contracts = ['0x7cca3B35530643E644CE040cf340a2B6aC278139', '0x63B0070c27ED6ba115390F03b99A85B9055D67A4', '0xdEbc4f1cA7dcbEBc11B232d857AcBCEF19B8341C', '0x8648aab04ed781143558E17412bD5E36246e9495', '0x10B99f8179eC7Fc53bDbc43e2efedcCdC034Cc61', '0xa0F0b3BCEe06595283927BfDd140E215bD51dA7D'];
