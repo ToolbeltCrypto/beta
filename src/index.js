@@ -109,9 +109,14 @@ function displayZone(newZone) {
     hexClose();
 }
 document.getElementById('connectWallet').addEventListener("click", async() => {
+    let isConnected;
     document.getElementById('connectWallet').innerHTML = 'CONNECTING';
-    await connectWallet();
-    document.getElementById('connectWallet').innerHTML = 'CONNECTED';
+    isConnected = await connectWallet();
+    if (isConnected) {
+        document.getElementById('connectWallet').innerHTML = 'CONNECTED';
+    } else {
+        document.getElementById('connectWallet').innerHTML = 'CONNECT WALLET';
+    }
 });
 
 let eLinkTest = document.getElementsByName('linkTest');
