@@ -9,8 +9,6 @@ var hexPage = 0;
 var hexPageSign = -1;
 var hexRow = 0;
 
-//catch all error function? to prevent metamask rpc error, connect wallet error
-//replace toolbelt with new name in all files?
 function handleError(error) {
     if (error.reason != undefined) {
         let eSplit = error.reason.split(' ');
@@ -23,8 +21,10 @@ function handleError(error) {
         let eSplit = error.message.split(' ');
         if (eSplit.includes('status')) {
             alert('Too many requests. Wait and try again.');
+        } else if (eSplit.includes('undefined')) {
+            alert('Connect wallet to access the blockchain.');
         } else {
-            alert(error.message);
+            alert('ERROR: ' + error.message);
         }
     } else {
         let eSplit = error.toString().split(' ');
@@ -34,7 +34,7 @@ function handleError(error) {
             alert(error.toString());
         }
     }
-    console.log(error.toString());
+    console.log(error);
 }
 
 function findInputs(className) {
