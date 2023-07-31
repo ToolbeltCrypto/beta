@@ -9,6 +9,8 @@ var hexPage = 0;
 var hexPageSign = -1;
 var hexRow = 0;
 
+//catch all error function? to prevent metamask rpc error, connect wallet error
+//replace toolbelt with new name in all files?
 function handleError(error) {
     if (error.reason != undefined) {
         let eSplit = error.reason.split(' ');
@@ -792,7 +794,7 @@ document.getElementById('unsubscribeEvent').addEventListener("click", async() =>
 
 //HOME ZONE
 setupToggleDisplay('homeWrap2');
-let homeSections = ['Community', 'Revenue', 'Decentralize'];
+let homeSections = ['Community', 'Revenue', 'Decentralize', 'Track'];
 for (let i=0; i < homeSections.length; i++) {
     document.getElementById('home' + homeSections[i]).addEventListener("click", () => {
         let eHomeWrap = document.getElementById('homeWrap' + homeSections[i]);
