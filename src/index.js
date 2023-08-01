@@ -108,7 +108,11 @@ function displayZone(newZone) {
         statsClose();
         statsOpen();
     }
+    statsClose();
     hexClose();
+    menuClose();
+    document.getElementById('subscribeToContainer').style.display = 'none';
+
 }
 document.getElementById('connectWallet').addEventListener("click", async() => {
     let isConnected;
@@ -753,14 +757,14 @@ document.getElementById('transferOwnership').addEventListener("click", async() =
 });
 
 //EVENT ZONE
-document.getElementById('subscribeTo').addEventListener("click", async() => {
-    let eSubToDisplay = document.getElementById('subscribeToContainer').style.display;
-    if (eSubToDisplay == 'none') {
+function toggleSubscribeTo() {
+    if (document.getElementById('subscribeToContainer').style.display == 'none') {
         document.getElementById('subscribeToContainer').style.display = 'block';
     } else {
         document.getElementById('subscribeToContainer').style.display = 'none';
     }
-});
+}
+document.getElementById('subscribeTo').addEventListener("click", async() => {toggleSubscribeTo()});
 document.getElementById('subscribeToCreateDelta').addEventListener("click", async() => {
     let placeholders = [];
     placeholders[0] = 'Token with Voting Power';
