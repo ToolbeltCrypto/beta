@@ -2,8 +2,9 @@
     #product {
         display: none;
     } #mobileWarning {
-        font-size: 64px;
         display: block;
+        margin: 16px;
+        font-size: 128px;
     }
 } @media (orientation: landscape) {
     #mobileWarning {
