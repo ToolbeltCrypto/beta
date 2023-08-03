@@ -82,7 +82,7 @@ export async function connectWallet() {
             await getEventPing();
             return true;
         } else {
-            alert('no wallet found');
+            alert('ERROR: no wallet found');
             return false;
         }
     } catch(e) {
@@ -413,13 +413,15 @@ export async function getVoteDuration() {
 export async function subscribeToCreateDelta(token) {
     if (token == '') {
         token = cTOKEN.address;
+    } else {
+        token = token.join(', ');
     }
     subscribe([cLOCKER.address, 'CreateDelta', 'address indexed, address indexed, uint indexed', 'token, contract, ID', token])
 }
 export async function subscribeToStake() {
     subscribe([cSTAKE.address, 'Stake', 'address indexed, uint', 'wallet, wei staked', ''])
 }
-export async function subscribe(inputParams) { //retest? allow non-spaced list? no menu close when unbypassed? subscribe to... button (simplify vote subscription, etc.)?
+export async function subscribe(inputParams) { //no menu close when unbypassed?
     //address contractAddress, eventName, paramsTypes, paramNames, filterValues
     console.log(inputParams);
     let contractAddress = inputParams[0];
@@ -447,9 +449,9 @@ export async function subscribe(inputParams) { //retest? allow non-spaced list? 
     }
     params += ')';
 
-
+    //dont check this? instead check interface for function and params? get verified abi from bscscan api?
     let contract = new ethers.Contract(contractAddress, ['event ' + params], wallet);
-    let outputs = await contract.queryFilter(getEventFilterInput(contractAddress, params, bytesList), -1000);
+    let outputs = await contract.queryFilter(getEventFilterInput(contractAddress, params, bytesList), -990);
     console.log(outputs);
 
     if (outputs.length == 0 && !bypassMode) {
@@ -600,8 +602,14 @@ export async function getEventHex(id, block, isLoop) {
     let contract = new ethers.Contract(evnt.contractAddress, ['event ' + evnt.abi_], wallet);
     let filterInput = getEventFilterInput(evnt.contractAddress, evnt.abi_, await filterValuesPromise);
     let outputs = await loopEventFilter(contract, filterInput, isLoop);
-    if (outputs.length != 0) {     
-        loopEventBlock = outputs[0].blockNumber - 1;
+    if (outputs.length != 0) {
+        let min = 0;
+        for (let i=0; i < outputs.length; i++) {
+            if (outputs[i].blockNumber < min || min == 0) {
+                min = outputs[i].blockNumber - 1;
+            }
+        }
+        loopEventBlock = min;
         document.getElementsByClassName('hexFilter')[1].value = loopEventBlock;
         return outputs;
     }
@@ -691,7 +699,7 @@ function getEventFilterInput(contractAddress, abi, bytesList) { //multiple trans
     console.log(abi);
     return eval(filterFunction)(...filterCall);
 }
-async function loopEventFilter(contract, filterInput, isLoop) {
+async function loopEventFilter(contract, filterInput, isLoop) { //reloop after too many rpc requests?
     let outputs = [];
     if (!bypassMode) {
         outputs = await contract.queryFilter(filterInput, loopEventBlock-1000, loopEventBlock);
@@ -712,6 +720,7 @@ async function loopEventFilter(contract, filterInput, isLoop) {
     } else {
         let j=0;
         let outputssPromises = [];
+        await delay(1000);
         while(j < 36) {
             let p = contract.queryFilter(filterInput, loopEventBlock-1000, loopEventBlock);
             loopEventBlock -= 1000;
@@ -734,13 +743,12 @@ async function loopEventFilter(contract, filterInput, isLoop) {
         }
         if (outputs.length == 0 && isLoop) {
             try {
-                await delay(1000);
                 outputs = await loopEventFilter(contract, filterInput, isLoop);
             } catch {
                 throw('query paused');
             }
         }
-    }
+    }    
     return outputs;
 }
 
@@ -789,7 +797,6 @@ export async function testAll() {
 
         // await transfer('100', wallet2.address);
 
-        // //error below? enable affiliate before unlock
         // await unlockLiquidity([cTOKEN.address]);
         // await unstake();
 
