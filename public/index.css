@@ -2,9 +2,9 @@
     #product {
         display: none;
     } #mobileWarning {
-        display: block;
+        font-size: 72px;
         margin: 16px;
-        font-size: 72px;        
+        display: block;
     }
 } @media (orientation: landscape) {
     #mobileWarning {
@@ -223,51 +223,31 @@ button {
     color: var(--white);
 }
 
-#widgetButtonContainer {
-    display: flex;
-} .circleButton {
+#toggleButtonContainer {
     position: fixed;
-    display: inline-block;
-    background-color: var(--color2);
+    bottom: 48px;
+    right: 48px;
+    font-size: 20px;
+} .toggleButton {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-content: center;
     text-align: center;
-    color: var(--color4);
+    flex-direction: column;
+    background-color: var(--color1);
+    color: var(--white);
     height: 32px;
     width: 32px;
     margin: 0;
-    bottom: 16px;
-    right: 16px;
     padding: 2px;
-    border-radius: 50%;
+    border-radius: 4px;
     cursor: pointer;
-} .circleButton:hover {
-    background-color: var(--color4);
-    color: var(--white);
-} .innerCircleButton {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    position: relative;
-    background-color: var(--color1);
-    color: inherit;
-    text-align: center;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border-radius: 50%;
-    cursor: pointer;
-} #statsOpen {
-    color: var(--white);
-} #hexOpen {
-    color: var(--white);
-    transform: translate(-44px, 0);
-} #hexClose {
+} .toggleButton:hover {
+    background-color: var(--color2);
+} #toggleHex {
     transform: translate(-44px, 0);
 } #toggleBypass {
-    color: var(--white);
     transform: translate(0, -44px);
 }
 
@@ -413,7 +393,7 @@ button {
     grid-column: 1;
 } #hexForm {
     text-align: center;
-    background-color: inherit;
+    background-color: transparent;
     margin: 0;
     padding: 16px 32px;
     border-radius: inherit;
@@ -423,6 +403,13 @@ button {
     width: 100%;
     margin: 0;
     margin-bottom: 8px;
+} #hexDescriptor {
+    color: var(--white);
+    padding: 0px;
+    margin: 0px;
+    margin-top: 8px;
+    margin-bottom: -8px;
+    font-size: 12px;
 } .hexTable {
     width: 100%;
     border-collapse: collapse;
