@@ -104,10 +104,6 @@ function displayZone(newZone) {
     try {
         document.getElementById('stats' + currentZone).style.display = 'block';
     } catch {}
-    if (document.getElementById('statsContainer').style.display != 'none') {
-        statsClose();
-        statsOpen();
-    }
     statsClose();
     hexClose();
     menuClose();
@@ -205,15 +201,20 @@ async function allowanceCheck() {
 
 
 //STATS
+function toggleStats() {
+    if (document.getElementById('toggleStats').innerHTML == 'X') {
+        statsClose();
+    } else {
+        statsOpen();
+    }
+}
 function statsOpen() {
-    document.getElementById('statsOpen').style.display = 'none';
-    document.getElementById('statsClose').style.display = 'inline-block';
+    document.getElementById('toggleStats').innerHTML = 'X';
     document.getElementById('statsContainer').style.display = 'block';
     statsUpdate();
 }
 function statsClose() {
-    document.getElementById('statsOpen').style.display = 'inline-block';
-    document.getElementById('statsClose').style.display = 'none';
+    document.getElementById('toggleStats').innerHTML = '&#128794;';
     document.getElementById('statsContainer').style.display = 'none';
 }
 async function statsUpdate() {
@@ -324,7 +325,6 @@ async function statsView() {
         } else if (currentZone == 'Event') {
             if (isHexLooping) {
                 setHexBreak(true);
-                await delay(100);
             }
             let paramNamesPromise = getEventParamNames(inputParams[0]);
             let currentBlock = await getBlock();
@@ -361,8 +361,7 @@ async function statsView() {
         handleError(e)
     }
 }
-document.getElementById('statsOpen').addEventListener("click", () => {statsOpen();});
-document.getElementById('statsClose').addEventListener("click", () => {statsClose();});
+document.getElementById('toggleStats').addEventListener("click", () => {toggleStats();});;
 let statsViewElements = document.getElementsByClassName('statsView');
 for (let i = 0; i < statsViewElements.length; i++) {
     statsViewElements[i].addEventListener("click", async(a) => {a.preventDefault(); document.getElementsByClassName('statsView')[i].innerHTML = 'QUERYING'; await statsView(); document.getElementsByClassName('statsView')[i].innerHTML = 'VIEW';});
@@ -373,18 +372,25 @@ for (let i = 0; i < statsViewElements.length; i++) {
 export function hexRowAdd() {
     hexRow += 1;
 }
+
+function toggleHex() {
+    if (document.getElementById('toggleHex').innerHTML == 'X') {
+        hexClose();
+    } else {
+        hexOpen();
+    }
+}
 function hexOpen() {
-    document.getElementById('hexOpen').style.display = 'none';
-    document.getElementById('hexClose').style.display = 'inline-block';
+    document.getElementById('toggleHex').innerHTML = 'X';
     document.getElementById('hexContainer').style.display = 'block';
     hexPage = 0;
+    hexRow = 0;
     hexUpdate();
 }
 function hexClose() {
     setHexBreak(true);
     removeElements('hexRow');
-    document.getElementById('hexOpen').style.display = 'inline-block';
-    document.getElementById('hexClose').style.display = 'none';
+    document.getElementById('toggleHex').innerHTML = '&#128824;';
     document.getElementById('hexContainer').style.display = 'none';
     hexMap.clear();
 }
@@ -457,8 +463,7 @@ async function hexView() {
                 }
             }
 
-        } else if(currentZone == 'Sale') {
-            hexPage += hexPageSign;
+        } else if(currentZone == 'Sale') { //fix?
             let hex = await getSaleHex(inputParams[0], hexPage);
             let names = hex[0];
             let contracts = hex[1];
@@ -481,7 +486,6 @@ async function hexView() {
                 document.getElementsByClassName('hexRow')[i].appendChild(tdType);
             }
         } else if (currentZone == 'Locker') {
-            hexPage += hexPageSign;
             if (inputParams[0] == '') {inputParams[0] = cTOKEN.address;}
             let hex = await getLockerHex(inputParams[0], hexPage);
             let currentTime = await getTime();
@@ -523,7 +527,6 @@ async function hexView() {
             }
             let hex;
             let id = hexPage;
-            console.log(hexPage);
             setHexBreak(false);
             while(true) {
                 if (inputParams[0] != '') {
@@ -535,7 +538,7 @@ async function hexView() {
                         if (await isUnsubscribed(id)) {
                             hexPage += hexPageSign;
                         } else {break loopPage;}
-                        id = hexPage; //fix?
+                        id = hexPage;
                     } while(id > 0 && hexPage > 0);
 
                     try {
@@ -577,7 +580,7 @@ async function hexView() {
             }
         }
     } catch(e) {
-        if (e != 'query paused') {
+        if (e != 'query paused') { //isHexLooping?
             isHexLooping = false;
             handleError(e);
         }
@@ -589,8 +592,7 @@ async function hexView() {
     isHexLooping = false;
 
 }
-document.getElementById('hexOpen').addEventListener("click", () => {hexOpen();});
-document.getElementById('hexClose').addEventListener("click", () => {hexClose();});
+document.getElementById('toggleHex').addEventListener("click", () => {toggleHex();});
 document.getElementById('hexFilterButton').addEventListener("click", async() => {
     if (!isHexLooping) {
         isHexLooping = true;
@@ -598,7 +600,7 @@ document.getElementById('hexFilterButton').addEventListener("click", async() => 
         await hexView();
     }
 });
-document.getElementById('hexNext').addEventListener("click", async() => { //fix hex event?
+document.getElementById('hexNext').addEventListener("click", async() => {
     if (!isHexLooping) {
         isHexLooping = true;
         hexPageSign = 1;
@@ -616,7 +618,7 @@ document.getElementById('hexPrevious').addEventListener("click", async() => {
         isHexLooping = true;
         hexPageSign = -1;
         hexPage += hexPageSign;
-        if (hexPage < 1) {hexPage = 1;}
+        if (hexPage < 1) {hexPage = 0;}
         document.getElementsByClassName('hexFilter')[0].value = '';
         document.getElementsByClassName('hexFilter')[1].value = '';
         removeElements('hexRow');
@@ -625,7 +627,12 @@ document.getElementById('hexPrevious').addEventListener("click", async() => {
         await hexView();
     }
 });
-document.getElementById('hexFilterBreak').addEventListener("click", async() => {setHexBreak(true);});
+document.getElementById('hexFilterBreak').addEventListener("click", async() => {
+    setHexBreak(true);
+    if (isHexLooping) {
+        document.getElementById('hexFilterButton').innerHTML = 'PAUSING';
+    }
+});
 
 //TEST ZONE
 document.getElementById('test').addEventListener("click", async() => { await testAll(); });
