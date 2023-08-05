@@ -1,4 +1,4 @@
-import { testAll, setTax, approve, stake, unstake, claimStake, newSale, joinSale, endSale, claimSale, unlockLiquidity, getUserStake, getTotalStake, getTotalSupply, getTotalRewards, getUserRewards, getUnstakePayout, allowance, balanceOf, setupAffiliate, getConnections, getTokensEarned, getMostConnections, getMostTokensEarned, getAffiliate, getBalancePair, getSale, getTime, getUnlockablePercentage, tokenOwnershipToLocker, createDelta, executeDelta, voteDelta, toggleDelta, getDelta, getParamValues, getReturnValues, getLockerHex, getSaleHex, cTOKEN, cSTAKE, cSALE, cAFFILIATE, cLOCKER, cEVENT, WETH, getTokenVote, getCreationCost, subscribe, unsubscribe, getEventHex, getBlock, getEventCount, getEventParamNames, getEventPing, getApproveHex, getTokenName, connectWallet, hexBreak, setHexBreak, isUnsubscribed, getTransaction, delay, getVoteDuration, unapprove, subscribeToCreateDelta, subscribeToStake } from './chain.js';
+import { testAll, setTax, approve, stake, unstake, claimStake, newSale, joinSale, endSale, claimSale, unlockLiquidity, getUserStake, getTotalStake, getTotalSupply, getTotalRewards, getUserRewards, getUnstakePayout, allowance, balanceOf, setupAffiliate, getConnections, getTokensEarned, getMostConnections, getMostTokensEarned, getAffiliate, getBalancePair, getSale, getTime, getUnlockablePercentage, tokenOwnershipToLocker, createDelta, executeDelta, voteDelta, toggleDelta, getDelta, getParamValues, getReturnValues, getLockerHex, getSaleHex, cTOKEN, cSTAKE, cSALE, cAFFILIATE, cLOCKER, cEVENT, WETH, getTokenVote, getCreationCost, subscribe, unsubscribe, getEventHex, getBlock, getEventCount, getEventParamNames, getEventPing, getApproveHex, getTokenName, connectWallet, hexBreak, setHexBreak, isUnsubscribed, getTransaction, delay, getVoteDuration, unapprove, subscribeToCreateDelta, subscribeToStake, addChain } from './chain.js';
 import { ethers } from "ethers";
 var menuSubmitFunction;
 var currentZone = 'Home';
@@ -331,7 +331,7 @@ async function statsView() {
             let block = (await getTransaction(inputParams[1])).blockNumber;
             let output = [];
             try {
-                let hex = await getEventHex(inputParams[0], block, false);
+                let hex = await getEventHex(inputParams[0], block, 1);
                 console.log(hex);
                 for (let i=0; i < hex.length; i++) {
                     if (hex[i].transactionHash == inputParams[1]) {
@@ -531,7 +531,7 @@ async function hexView() {
             while(true) {
                 if (inputParams[0] != '') {
                     hexPage = inputParams[0];
-                    hex = await getEventHex(inputParams[0], inputParams[1], true);
+                    hex = await getEventHex(inputParams[0], inputParams[1], 10000);
                     setHexBreak(true);
                 } else {
                     loopPage: do {
@@ -542,7 +542,7 @@ async function hexView() {
                     } while(id > 0 && hexPage > 0);
 
                     try {
-                        hex = await getEventHex(id, inputParams[1], true);
+                        hex = await getEventHex(id, inputParams[1], 10000);
                     } catch {}
                     setHexBreak(true);
                 }
@@ -636,6 +636,7 @@ document.getElementById('hexFilterBreak').addEventListener("click", async() => {
 
 //TEST ZONE
 document.getElementById('test').addEventListener("click", async() => { await testAll(); });
+document.getElementById('addChainTestBNB').addEventListener("click", async() => { await addChain('tBNB'); });
 
 
 //SALE ZONE
