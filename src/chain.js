@@ -14,10 +14,9 @@ import bc_sale from "../ABI/bc_sale.json";
 import bc_affiliate from "../ABI/bc_affiliate.json";
 import bc_locker from "../ABI/bc_locker.json";
 import bc_event from "../ABI/bc_event.json";
+import { fetchJson } from "ethers/lib/utils.js";
 export var hexBreak = false;
 export var loopEventBlock;
-
-//if not bsc or bsc testnet, alert?
 
 /* SIGNER */
 var provider;
@@ -27,23 +26,11 @@ var chainID;
 /* WALLET */
 var privateKeys = ['z', 'z'];
 
-// matic
-// const alchemyApiKey = 'z';
-// const provider = new ethers.providers.AlchemyProvider('maticmum', alchemyApiKey);
-export var WETH = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889';
-let swapRouter = '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
-let contracts = ['0xBAd686653c8DB9F2473b94950b1A8bCF258b8b85', '0xC7c5b5EeCd742914161e34237AD9322C45bcE5B1', '0x67742481C127cc75c59A4feD1Ae6282264670552', '0xdD9c9C0B37a016A9246FA729dcB11Acde44dFBe3', '0x9a4d565B568D4717AfD168De27c6b6308570FBA4', '0x7bD4983306522deC9065cf3C51C6040d948Eb731'];
+export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'; //change on mainnet?
+let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1'; //change on mainnet?
+let contracts = ['0x661b94F8887d822c9e9d26a9f058e895BeA8c0b9', '0xe10E308FF1B99Acc88f3Cb9473aBCb273e2D6F49', '0x2C793A3fEf05CC2Ee5c5B77A41a47B47eE196450', '0xF897BC9bCA0dF4e68f3883c775A539b82b4fC94e', '0xD10edcB7672eb7F3349997f36ccb711543464Bb0', '0xA87152687b7CA79794FBE1CB4589Fe298828A5E3']; //change on mainnet?
 
-// bsc
-// const provider = new ethers.providers.JsonRpcProvider('z');
-// export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd';
-// let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1';
-// let contracts = ['0x7cca3B35530643E644CE040cf340a2B6aC278139', '0x63B0070c27ED6ba115390F03b99A85B9055D67A4', '0xdEbc4f1cA7dcbEBc11B232d857AcBCEF19B8341C', '0x8648aab04ed781143558E17412bD5E36246e9495', '0x10B99f8179eC7Fc53bDbc43e2efedcCdC034Cc61', '0xa0F0b3BCEe06595283927BfDd140E215bD51dA7D'];
 
-// var wallet2 = new ethers.Wallet(privateKeys[0], provider);
-// var wallet = new ethers.Wallet(privateKeys[1], provider);
-// wallet._address = wallet.address;
-// var chainID = provider.getNetwork.chainId;
 
 //wallet connect support?
 export var cTOKEN;
@@ -53,7 +40,7 @@ export var cAFFILIATE;
 export var cLOCKER;
 export var cEVENT;
 
-function loadContracts() {
+async function loadContracts() {
     cTOKEN = new ethers.Contract(contracts[0], abi_token, wallet);
     cSTAKE = new ethers.Contract(contracts[1], abi_stake, wallet);
     cSALE = new ethers.Contract(contracts[2], abi_sale, wallet);
@@ -62,14 +49,14 @@ function loadContracts() {
     cEVENT = new ethers.Contract(contracts[5], abi_event, wallet);
 }
 
-
 export async function connectWallet() {
     try {
         if (window.ethereum) {
+            addChain('tBNB'); //change for mainnet?
             provider = new ethers.providers.Web3Provider(window.ethereum);
             chainID = provider.getNetwork.chainId;
             wallet = provider.getSigner((await provider.send("eth_requestAccounts", []))[0]);
-            loadContracts();
+            await loadContracts();
 
             provider.on('accountsChanged', async() => {
                 await provider.send("eth_requestAccounts", []);
@@ -89,6 +76,45 @@ export async function connectWallet() {
         alert(e);
     }
 }
+
+export async function addChain(nativeCurrency) {
+    let cID;
+    let cName;
+    let rUrls;
+    let bUrls;
+    let nName;
+    let nSymbol;
+    let nDecimals;
+
+    if (nativeCurrency == 'tBNB') { 
+        cID = '0x61';
+        cName = 'BNB Smart Chain Testnet';
+        rUrls = ['https://bsc-testnet.publicnode.com'];
+        bUrls = ['https://testnet.bscscan.com'];
+        nName = 'testnet BNB';
+        nSymbol = 'tBNB';
+        nDecimals = 18;
+    } else if (nativeCurrency == 'BNB') {
+        //change for mainnet?
+    }
+
+    await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [
+            {
+                chainId: cID,
+                chainName: cName,
+                rpcUrls: rUrls,
+                blockExplorerUrls: bUrls,
+                nativeCurrency: {
+                    name: nName,
+                    symbol: nSymbol,
+                    decimals: nDecimals,
+                },
+            },
+        ],
+    });
+};
 
 export async function deploy() {
     console.log('DEPLOYING...');
@@ -422,8 +448,7 @@ export async function subscribeToStake() {
     subscribe([cSTAKE.address, 'Stake', 'address indexed, uint', 'wallet, wei staked', ''])
 }
 export async function subscribe(inputParams) { //no menu close when unbypassed?
-    //address contractAddress, eventName, paramsTypes, paramNames, filterValues
-    console.log(inputParams);
+    //contractAddress, eventName, paramsTypes, paramNames, filterValues
     let contractAddress = inputParams[0];
     let params = inputParams[1] + '(';
     let paramTypes = inputParams[2];
@@ -447,20 +472,15 @@ export async function subscribe(inputParams) { //no menu close when unbypassed?
         params += paramTypesList[i];
         if (i != paramTypesList.length-1) {params += ', ';}
     }
-    params += ')';
+    params += ')';  
 
-    //dont check this? instead check interface for function and params? get verified abi from bscscan api?
-    let contract = new ethers.Contract(contractAddress, ['event ' + params], wallet);
-    let outputs = await contract.queryFilter(getEventFilterInput(contractAddress, params, bytesList), -990);
-    console.log(outputs);
-
-    if (outputs.length == 0 && !bypassMode) {
-        alert("WARNING: recent events not found in 1000 blocks. Press 'ctrl + b' or click the 'B' button to enter bypass mode.");
-    } else {
+    if (await verifyEvent(contractAddress, params) || bypassMode) {
         let r = await cEVENT.subscribeEvent(contractAddress, params, paramNames, bytesList, await getGasObj());
         await r.wait();
         console.log(r);
         await getEventPing();
+    } else {
+        alert("WARNING: events not verified on bscscan. Press 'ctrl + b' or click the 'B' button to enter bypass mode.");
     }   
 }
 export async function unsubscribe(inputParams) {
@@ -468,6 +488,18 @@ export async function unsubscribe(inputParams) {
     await r.wait();
     console.log(r);
     await getEventPing();
+}
+async function verifyEvent(contractAddress, params) {
+    let eventParams = 'event ' + params.split(', ').join(',');
+    let fetch = (await fetchJson('https://api-testnet.bscscan.com/api?module=contract&action=getabi&address=' + contractAddress + '&apikey=NT2AZKZKAV7F2FS37245TEVHGVYJAXBYD4')).result; //change on mainnet?
+    if (fetch != 'Contract source code not verified') {
+        const iface = new ethers.utils.Interface(fetch);
+        const abi = iface.format('minimal');
+        if (abi.includes(eventParams)) {
+            return true;
+        }
+    }
+    return false;
 }
 export async function getEventCount() {
     return await cEVENT.eventCount(wallet._address);
@@ -587,7 +619,7 @@ export async function getSaleHex(filter, page) {
     }
     return [names, contracts, types];
 }
-export async function getEventHex(id, block, isLoop) {
+export async function getEventHex(id, block, blocksPerRequest) {
     let evntPromise = cEVENT.events_wallet_id(wallet._address, id);
     let filterValuesPromise = cEVENT.getFilterValues(id);
     let currentBlock = await getBlock();
@@ -601,7 +633,7 @@ export async function getEventHex(id, block, isLoop) {
 
     let contract = new ethers.Contract(evnt.contractAddress, ['event ' + evnt.abi_], wallet);
     let filterInput = getEventFilterInput(evnt.contractAddress, evnt.abi_, await filterValuesPromise);
-    let outputs = await loopEventFilter(contract, filterInput, isLoop);
+    let outputs = await loopEventFilter(contract, filterInput, blocksPerRequest);
     if (outputs.length != 0) {
         let min = 0;
         for (let i=0; i < outputs.length; i++) {
@@ -615,7 +647,7 @@ export async function getEventHex(id, block, isLoop) {
     }
     return null;
 }
-export async function getEventPing() { //no event still connects wallet?
+export async function getEventPing() {
     let eventCount = await getEventCount();
     let eventsPromises = [];
     let filterValuesPromises = [];
@@ -679,7 +711,7 @@ export async function getEventPing() { //no event still connects wallet?
     }
     console.log(events);
 }
-function getEventFilterInput(contractAddress, abi, bytesList) { //multiple transfers in same block appear as one?
+function getEventFilterInput(contractAddress, abi, bytesList) { //multiple transfers in same block appear as one? //issue?
     let contract = new ethers.Contract(contractAddress, ['event ' + abi], wallet);
     let eventName = abi.split(' ')[0].split('(')[0];
     let filterFunction = 'contract.filters.' + eventName;
@@ -696,14 +728,17 @@ function getEventFilterInput(contractAddress, abi, bytesList) { //multiple trans
             filterCall.push(ethers.utils.hexStripZeros(bytesList[i]).toString());
         }
     }
-    console.log(abi);
     return eval(filterFunction)(...filterCall);
 }
-async function loopEventFilter(contract, filterInput, isLoop) { //reloop after too many rpc requests?
+async function loopEventFilter(contract, filterInput, blocksPerRequest) { //reloop after too many rpc requests?
+    let isLoop;
+    if (blocksPerRequest < 100) {
+        isLoop == false;
+    }
     let outputs = [];
     if (!bypassMode) {
-        outputs = await contract.queryFilter(filterInput, loopEventBlock-1000, loopEventBlock);
-        loopEventBlock -= 1000;
+        outputs = await contract.queryFilter(filterInput, loopEventBlock-blocksPerRequest, loopEventBlock);
+        loopEventBlock -= blocksPerRequest;
         document.getElementsByClassName('hexFilter')[1].value = loopEventBlock;
 
         if (hexBreak) {
@@ -712,7 +747,7 @@ async function loopEventFilter(contract, filterInput, isLoop) { //reloop after t
         }
         if (outputs.length == 0 && isLoop) {
             try {
-                outputs = await loopEventFilter(contract, filterInput, isLoop);
+                outputs = await loopEventFilter(contract, filterInput, blocksPerRequest);
             } catch {
                 throw('query paused');
             }
@@ -722,8 +757,8 @@ async function loopEventFilter(contract, filterInput, isLoop) { //reloop after t
         let outputssPromises = [];
         await delay(1000);
         while(j < 36) {
-            let p = contract.queryFilter(filterInput, loopEventBlock-1000, loopEventBlock);
-            loopEventBlock -= 1000;
+            let p = contract.queryFilter(filterInput, loopEventBlock-blocksPerRequest, loopEventBlock);
+            loopEventBlock -= blocksPerRequest;
             document.getElementsByClassName('hexFilter')[1].value = loopEventBlock;
             outputssPromises.push(p);
             j++;
@@ -743,7 +778,7 @@ async function loopEventFilter(contract, filterInput, isLoop) { //reloop after t
         }
         if (outputs.length == 0 && isLoop) {
             try {
-                outputs = await loopEventFilter(contract, filterInput, isLoop);
+                outputs = await loopEventFilter(contract, filterInput, blocksPerRequest);
             } catch {
                 throw('query paused');
             }
@@ -780,7 +815,7 @@ export async function testAll() {
         // await addIgnoreFee(cLOCKER.address); 
         // await tokenOwnershipToLocker([cTOKEN.address, cTOKEN.address]);
         // await tokenOwnershipToLocker([cLOCKER.address, cTOKEN.address]);
-        await createAndExecuteDelta(cTOKEN.address, 'balanceOf', 'address', '0xfFEd77aD4A4FbCB255eBb9Ba40de4430Df34E7E4', 'uint');
+        // await createAndExecuteDelta(cTOKEN.address, 'balanceOf', 'address', '0xfFEd77aD4A4FbCB255eBb9Ba40de4430Df34E7E4', 'uint');
         // await createAndExecuteDelta(cLOCKER.address, 'setStakeVotePercent', 'uint', '10000', '');
         // await createAndExecuteDelta(cLOCKER.address, 'transferOwnership', 'address', wallet._address, '');
         // // await toggleAndExecuteDelta(cTOKEN.address);
@@ -794,9 +829,11 @@ export async function testAll() {
         // await subscribe([cSALE.address, 'UnlockLiquidity', 'address indexed, uint, uint', 'tokenSale ,weiToWallet, weiFee', cTOKEN.address]);
         // await subscribe([cAFFILIATE.address, 'AffiliateDistribution', 'address indexed, address indexed, address indexed, uint', 'token,affiliate,wallet,weiIn', cTOKEN.address]);
         // await subscribe([cEVENT.address, 'SubscribeEvent', 'address indexed, address indexed', 'contract, wallet', 'null, ' + wallet._address]);
+        await subscribe([WETH, 'Approval', 'address indexed, address indexed, uint256', 'wallet, contract, wei', '']);
 
         // await transfer('100', wallet2.address);
 
+        // //error below? enable affiliate before unlock
         // await unlockLiquidity([cTOKEN.address]);
         // await unstake();
 
