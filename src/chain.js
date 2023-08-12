@@ -28,7 +28,8 @@ var privateKeys = ['z', 'z'];
 
 export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'; //change on mainnet?
 let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1'; //change on mainnet?
-let contracts = ['0x661b94F8887d822c9e9d26a9f058e895BeA8c0b9', '0xe10E308FF1B99Acc88f3Cb9473aBCb273e2D6F49', '0x2C793A3fEf05CC2Ee5c5B77A41a47B47eE196450', '0xF897BC9bCA0dF4e68f3883c775A539b82b4fC94e', '0xD10edcB7672eb7F3349997f36ccb711543464Bb0', '0xA87152687b7CA79794FBE1CB4589Fe298828A5E3']; //change on mainnet?
+let contracts = ['0x6639BB4bD2515adE006cB5d5270D51678Aa12e6a', '0x0b4434aAc36B65cD7648cE90365397FE9b9087F4', '0x345B68aC19AEBDAd5b23BAd3CF72AdF44bf0A232', '0x4813FaF0AfB661153AEac94c9f07314c98510DB2', '0x4C71A2FCdC8ccD4AACd0b07C6ba41c999e76429A', '0x54Fa8812bb9b34C6EC3b891EedDDb26fe0Cb8AF8'];
+
 
 
 
@@ -89,7 +90,7 @@ export async function addChain(nativeCurrency) {
     if (nativeCurrency == 'tBNB') { 
         cID = '0x61';
         cName = 'BNB Smart Chain Testnet';
-        rUrls = ['https://bsc-testnet.publicnode.com'];
+        rUrls = ['https://endpoints.omniatech.io/v1/bsc/testnet/public']; //slow after earlier querys?
         bUrls = ['https://testnet.bscscan.com'];
         nName = 'testnet BNB';
         nSymbol = 'tBNB';
@@ -513,7 +514,7 @@ export async function getEventParamNames(id) {
 }
 
 //HEX
-export async function getApproveHex(token, block) {
+export async function getApproveHex(token, block, blocksPerRequest) {
     let abi = 'Approval(address indexed, address indexed, uint)';
     let filterInput = getEventFilterInput(token, abi, [ethers.utils.hexZeroPad(wallet._address, 32)]);
     let currentBlock = await getBlock();
@@ -523,7 +524,7 @@ export async function getApproveHex(token, block) {
     let contract = new ethers.Contract(token, ['event ' + abi], wallet);
     hexBreak = false;
 
-    let outputs = await loopEventFilter(contract, filterInput, true);
+    let outputs = await loopEventFilter(contract, filterInput, blocksPerRequest);
     if (outputs.length != 0) {     
         loopEventBlock = outputs[0].blockNumber - 1;
         document.getElementsByClassName('hexFilter')[1].value = loopEventBlock;
@@ -731,16 +732,15 @@ function getEventFilterInput(contractAddress, abi, bytesList) { //multiple trans
     return eval(filterFunction)(...filterCall);
 }
 async function loopEventFilter(contract, filterInput, blocksPerRequest) { //reloop after too many rpc requests?
-    let isLoop;
-    if (blocksPerRequest < 100) {
-        isLoop == false;
+    let isLoop = false;
+    if (blocksPerRequest > 100) {
+        isLoop = true;
     }
     let outputs = [];
     if (!bypassMode) {
         outputs = await contract.queryFilter(filterInput, loopEventBlock-blocksPerRequest, loopEventBlock);
         loopEventBlock -= blocksPerRequest;
         document.getElementsByClassName('hexFilter')[1].value = loopEventBlock;
-
         if (hexBreak) {
             hexBreak = false;
             return [];
@@ -816,7 +816,7 @@ export async function testAll() {
         // await tokenOwnershipToLocker([cTOKEN.address, cTOKEN.address]);
         // await tokenOwnershipToLocker([cLOCKER.address, cTOKEN.address]);
         // await createAndExecuteDelta(cTOKEN.address, 'balanceOf', 'address', '0xfFEd77aD4A4FbCB255eBb9Ba40de4430Df34E7E4', 'uint');
-        // await createAndExecuteDelta(cLOCKER.address, 'setStakeVotePercent', 'uint', '10000', '');
+        await createAndExecuteDelta(cLOCKER.address, 'setStakeVotePercent', 'uint', '10000', '');
         // await createAndExecuteDelta(cLOCKER.address, 'transferOwnership', 'address', wallet._address, '');
         // // await toggleAndExecuteDelta(cTOKEN.address);
 
@@ -829,13 +829,16 @@ export async function testAll() {
         // await subscribe([cSALE.address, 'UnlockLiquidity', 'address indexed, uint, uint', 'tokenSale ,weiToWallet, weiFee', cTOKEN.address]);
         // await subscribe([cAFFILIATE.address, 'AffiliateDistribution', 'address indexed, address indexed, address indexed, uint', 'token,affiliate,wallet,weiIn', cTOKEN.address]);
         // await subscribe([cEVENT.address, 'SubscribeEvent', 'address indexed, address indexed', 'contract, wallet', 'null, ' + wallet._address]);
-        await subscribe([WETH, 'Approval', 'address indexed, address indexed, uint256', 'wallet, contract, wei', '']);
+        // await subscribe([WETH, 'Approval', 'address indexed, address indexed, uint256', 'wallet, contract, wei', '']);
 
+        // await stake(['100']);
         // await transfer('100', wallet2.address);
+        // await unstake();
 
         // //error below? enable affiliate before unlock
         // await unlockLiquidity([cTOKEN.address]);
         // await unstake();
+        
 
     } catch (e) {
         console.log(e);
