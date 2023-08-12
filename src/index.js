@@ -324,7 +324,8 @@ async function statsView() {
             document.getElementById('voteTime').innerHTML = (voteTimeLeft / 60).toFixed() + ' minutes';
         } else if (currentZone == 'Event') {
             if (isHexLooping) {
-                setHexBreak(true);
+                alert('WARNING: stop searching first.');
+                return;
             }
             let paramNamesPromise = getEventParamNames(inputParams[0]);
             let currentBlock = await getBlock();
@@ -432,7 +433,7 @@ async function hexView() {
         if (currentZone == 'Approve') {
             hexPage += hexPageSign;
             if (inputParams[0] == '') {inputParams[0] = cTOKEN.address;}
-            let hex = await getApproveHex(inputParams[0], inputParams[1]);
+            let hex = await getApproveHex(inputParams[0], inputParams[1], 10000);
             let name = await getTokenName(inputParams[0]);
 
             if (hex != null) {
@@ -542,6 +543,7 @@ async function hexView() {
                     } while(id > 0 && hexPage > 0);
 
                     try {
+                        document.getElementsByClassName('hexFilter')[0].value = hexPage;
                         hex = await getEventHex(id, inputParams[1], 10000);
                     } catch {}
                     setHexBreak(true);
@@ -604,7 +606,7 @@ document.getElementById('hexNext').addEventListener("click", async() => {
     if (!isHexLooping) {
         isHexLooping = true;
         hexPageSign = 1;
-        hexPage += hexPageSign;
+        hexPage += Number(hexPageSign); //?
         document.getElementsByClassName('hexFilter')[0].value = '';
         document.getElementsByClassName('hexFilter')[1].value = '';
         removeElements('hexRow');
