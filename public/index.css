@@ -67,7 +67,7 @@ h1 {
     padding-top: 20px;
 }
 
-button {
+[type="button"] {
     display: inline-block;
     background-color: var(--color1);
     border: none;
@@ -81,7 +81,7 @@ button {
     margin-top: 8px;
     cursor: pointer;
     overflow: hidden;
-} button:hover {
+} [type="button"]:hover {
     background: var(--color2);
 } input {
     color: var(--white);
@@ -102,6 +102,24 @@ button {
     outline: none;
     box-shadow: 0 4px 16px 2px rgba(0,0,0,0.55);
     transition: box-shadow 0.8s ease;
+}
+
+.exitButton {
+    background-color: var(--color1);
+    color: var(--white);
+    font-size: 14px; 
+    height: 24px;
+    width: 24px; 
+    padding: 0px; 
+    margin: 0px; 
+    margin-top: -14px; 
+    margin-bottom: -24px; 
+    margin-left: 101%; 
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+} .exitButton:hover {
+    background-color: var(--color2);
 }
 
 .zone {
@@ -246,8 +264,8 @@ button {
 } .toggleButton:hover {
     background-color: var(--color2);
 } #toggleHex {
-    transform: translate(-44px, 0);
-} #toggleBypass {
+    transform: translate(-44px, -44px);
+} #toggleStats {
     transform: translate(0, -44px);
 }
 
@@ -282,7 +300,7 @@ button {
     margin: 0;
     margin-top: 4px;
     margin-bottom: 4px;
-} #menuForm button {
+} #menuForm [type="button"] {
     margin-top: 4px;
 } #menuForm input {
     margin: 0;
@@ -321,12 +339,54 @@ button {
     margin: 0;
     margin-top: 4px;
     margin-bottom: 4px;
-} #subscribeToForm button {
+} #subscribeToForm [type="button"] {
     margin-top: 4px;
     padding: 0px;
     height: 32px;
     width: 256px;
 } #subscribeToForm input {
+    margin: 0;
+    margin-top: 4px;
+}
+
+#connectWalletContainer {
+    position: fixed;
+    background-color: var(--black);
+    height: max-content;
+    width: 380px;
+    right: 0;
+    bottom: 50%;
+    margin: 12px;
+    padding: 8px;
+    border-radius: 12px;
+} #connectWalletForm {
+    text-align: center;
+    background-color: inherit;
+    margin: 0;
+    padding: 16px 32px;
+    padding-bottom: 8px;
+    border-radius: inherit;
+} #connectWalletForm #connectWalletTitle {
+    color: var(--white);
+    font-size: 32px;
+    font-family: serif;
+    font-weight: 500;
+    padding: -16px;
+    margin: 0;
+    margin-top: -4px;
+} #connectWalletForm #connectWalletDescription {
+    color: var(--white);
+    font-size: 12px;
+    padding: -16px;
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+} #connectWalletForm [type="button"] {
+    margin-top: 4px;
+    padding: 0px;
+    height: 32px;
+    width: 256px;
+} #connectWalletForm input {
     margin: 0;
     margin-top: 4px;
 }
@@ -370,7 +430,7 @@ button {
 } .statsDescriptor {
     font-weight: 550;
     padding-left: 28px;
-} #statsForm button {
+} #statsForm [type="button"] {
     margin: 0px;
     margin-bottom: 4px;
     width: 100%;
