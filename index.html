@@ -1,8 +1,8 @@
-    <!-- ? ./public/ -->
-    <link rel="stylesheet" href="./public/index.css"></link>
-    
-    <!-- add images? how to videos on each dapp? -->
-    <h1 class="center" id="mobileWarning">TURN SCREEN TO ENTER LANDSCAPE MODE</h1>
+<!-- ? ./public/ -->
+<link rel="stylesheet" href="./public/index.css"></link>
+
+<!-- add images? how to videos on each dapp? -->
+<h1 class="center" id="mobileWarning">TURN SCREEN TO ENTER LANDSCAPE MODE</h1>
 
 <div id="product">
     <!-- HOME -->
@@ -242,8 +242,9 @@
     <div class="zone" id="zoneTest" style="display: none;">
         <h1>Test Zone</h1>
         <p>Here creativity turns into reality.</p>
-        <button id="addChainTestBNB">ADD CHAIN BNB TESTNET</button>
-        <button id="test">TEST</button>
+        <button id="addChainTestBNB"  type="button">ADD CHAIN BNB TESTNET</button>
+        <button id="test" type="button">TEST</button>
+        
     </div>
 
 
@@ -251,55 +252,58 @@
     <div class="zone" id="zoneAffiliate" style="display: none;">
         <h1>Affiliate Zone</h1>
         <p>Refer a friend and earn token fees.</p>
-        <button id="setAffiliate">SETUP AFFILIATE</button>
+        <button id="setAffiliate" type="button">SETUP AFFILIATE</button>
     </div>
 
     <!-- APPROVAL -->
     <div class="zone" id="zoneApprove" style="display: none;">
         <h1>Approval Zone</h1>
         <p>View and alter approvals for any smart contract.</p>
-        <button id="approve">APPROVE</button>
-        <button id="unapprove">UNAPPROVE</button>
+        <button id="approve" type="button">APPROVE</button>
+        <button id="unapprove" type="button">UNAPPROVE</button>
     </div>
 
     <!-- EVENT -->
     <div class="zone" id="zoneEvent" style="display: none;">
         <h1>Event Zone</h1>
         <p>Listen to blockchain events through subscriptions.</p>
-        <button id="subscribeTo">SUBSCRIBE TO</button>
-        <button id="subscribeEvent">SUBSCRIBE</button>
-        <button id="unsubscribeEvent">UNSUBSCRIBE</button>
+        <button id="subscribeTo" type="button">SUBSCRIBE TO</button>
+        <button id="subscribeEvent" type="button">SUBSCRIBE</button>
+        <button id="unsubscribeEvent" type="button">UNSUBSCRIBE</button>
     </div>
 
     <!-- LOCKER -->
     <div class="zone" id="zoneLocker" style="display: none;">
         <h1>Locker Zone</h1>
         <p>Decentralize any smart contract by locking changes behind a community vote.</p>
-        <button id="voteDelta">VOTE DELTA</button>
-        <button id="createDelta">CREATE DELTA</button>
-        <button id="executeDelta">EXECUTE DELTA</button>
-        <button id="toggleDelta">TOGGLE VOTING</button>
-        <button id="transferOwnership">LOCK CONTRACT</button>
+        <button id="voteDelta" type="button">VOTE DELTA</button>
+        <div></div>
+        <button id="createDelta" type="button">CREATE DELTA</button>
+        <button id="executeDelta" type="button">EXECUTE DELTA</button>
+        <div></div>
+        <button id="toggleDelta" type="button">TOGGLE VOTING</button>
+        <button id="transferOwnership" type="button">LOCK CONTRACT</button>
     </div>
 
     <!-- SALE -->
     <div class="zone" id="zoneSale" style="display: none;">
         <h1>Presale Zone</h1>
         <p>Crowdfund a presale to supply liquidity.</p>
-        <button id="joinSale">JOIN SALE</button>
-        <button id="claimSale">CLAIM SALE</button>
-        <button id="newSale">NEW SALE</button>
-        <button id="endSale">END SALE</button>
-        <button id="unlockLiquidity">UNLOCK LIQUIDITY</button>
+        <button id="joinSale" type="button">JOIN SALE</button>
+        <button id="claimSale" type="button">CLAIM SALE</button>
+        <div></div>
+        <button id="newSale" type="button">NEW SALE</button>
+        <button id="endSale" type="button">END SALE</button>
+        <button id="unlockLiquidity" type="button">UNLOCK LIQUIDITY</button>
     </div>
 
     <!-- STAKE -->
     <div class="zone" id="zoneStake" style="display: none;">
         <h1>Stake Zone</h1>
         <p>Buy a premium share of the company to earn revenue.</p>
-        <button id="stake">STAKE</button>
-        <button id="unstake">UNSTAKE</button>
-        <button id="claimStake">CLAIM</button>
+        <button id="stake" type="button">STAKE</button>
+        <button id="unstake" type="button">UNSTAKE</button>
+        <button id="claimStake" type="button">CLAIM</button>
     </div>
 
 
@@ -394,7 +398,7 @@
                     <div style="text-align: center;">
                         <p class="description">Explore a specific presale.</p>
                     </div>
-                    <button class="statsView">VIEW</button>
+                    <button class="statsView" type="button">VIEW</button>
                     <input class="statsInputSale" style="margin-bottom: 8px;" placeholder="Presale Token"></input>
 
                     <div class="chart"><div class="circle" id="balancePerTotalPair" style="background-color: var(--white);"><div class="innerCircle"></div></div></div>
@@ -418,7 +422,7 @@
                     <div style="text-align: center;">
                         <p class="description">Discover outside access to your tokens.</p>
                     </div>
-                    <button class="statsView">VIEW</button>
+                    <button class="statsView" type="button">VIEW</button>
                     <input class="statsInputApprove" placeholder="Contract address with Allowance"></input>
                     <input class="statsInputApprove" placeholder="Token address with Approval"></input>
                     <br></br>
@@ -432,7 +436,7 @@
                     <div style="text-align: center;">
                         <p class="description">Recognize your contributions to the community.</p>
                     </div>
-                    <button class="statsView">VIEW</button>
+                    <button class="statsView" type="button">VIEW</button>
                     <input class="statsInputAffiliate" placeholder="Token address of Referrals"></input>
                     <br></br>
 
@@ -453,7 +457,7 @@
                     <div style="text-align: center;">
                         <p class="description">View upcoming changes to locked contracts.</p>
                     </div>
-                    <button class="statsView">VIEW</button>
+                    <button class="statsView" type="button">VIEW</button>
                     <input class="statsInputLocker" placeholder="ID of Delta"></input>
                     <br></br>
 
@@ -483,7 +487,7 @@
                     <div style="text-align: center;">
                         <p class="description">Uncover blockchain history through events.</p>
                     </div>
-                    <button class="statsView">VIEW</button>
+                    <button class="statsView" type="button">VIEW</button>
                     <input class="statsInputEvent" placeholder="# of Subscription"></input>
                     <input class="statsInputEvent" placeholder="Hash of Transaction"></input>
                     <br></br>
@@ -518,6 +522,7 @@
         <!-- SUBSCRIBE TO -->
         <div id="subscribeToContainer" style="display: none;">
             <form id="subscribeToForm">
+                <button id="subscribeToExit" class="exitButton">X</button>
                 <p id="subscribeToTitle">SUBSCRIBE TO</p>
                 <p id="subscribeToDescription">Track blockchain events in a simplified fashion.</p>
                 <br></br>
@@ -544,10 +549,22 @@
         <div id="connectWallet" tabindex="0" style="float: right; margin-right: 32px;">CONNECT WALLET</div>
     </div>
 
+    <div id="connectWalletContainer" style="display: none;">
+        <form id="connectWalletForm">
+            <button id="connectWalletExit" class="exitButton">X</button>
+            <p id="connectWalletTitle">CONNECT WALLET</p>
+            <p id="connectWalletDescription">Pick a wallet type to access the blockchain.</p>
+            <br></br>
+            <button id="connectWalletDefault" type="button">Default</button>
+            <button id="connectWalletMoblie" type="button">Mobile Wallet + Desktop</button>
+            <br></br>
+        </form>
+    </div>
+
     <!-- ? add full screen mode for all widgets -->
         <div id="toggleButtonContainer">
-            <div class="toggleButton" id="toggleHex" tabindex="0">&#128824;</div>
-            <div class="toggleButton" id="toggleStats" tabindex="0">&#128794;</div>
+            <div class="toggleButton" id="toggleHex" tabindex="0" style="display: none;">&#128824;</div>
+            <div class="toggleButton" id="toggleStats" tabindex="0"  style="display: none;">&#128794;</div>
             <div class="toggleButton" id="toggleBypass" tabindex="0">B</div>
         </div>
 
