@@ -1,4 +1,4 @@
-import { testAll, setTax, approve, stake, unstake, claimStake, newSale, joinSale, endSale, claimSale, unlockLiquidity, getUserStake, getTotalStake, getTotalSupply, getTotalRewards, getUserRewards, getUnstakePayout, allowance, balanceOf, setupAffiliate, getConnections, getTokensEarned, getMostConnections, getMostTokensEarned, getAffiliate, getBalancePair, getSale, getTime, getUnlockablePercentage, tokenOwnershipToLocker, createDelta, executeDelta, voteDelta, toggleDelta, getDelta, getParamValues, getReturnValues, getLockerHex, getSaleHex, cTOKEN, cSTAKE, cSALE, cAFFILIATE, cLOCKER, cEVENT, WETH, getTokenVote, getCreationCost, subscribe, unsubscribe, getEventHex, getBlock, getEventCount, getEventParamNames, getEventPing, getApproveHex, getTokenName, connectWallet, hexBreak, setHexBreak, isUnsubscribed, getTransaction, delay, getVoteDuration, unapprove, subscribeToCreateDelta, subscribeToStake, addChain } from './chain.js';
+import { testAll, setTax, approve, stake, unstake, claimStake, newSale, joinSale, endSale, claimSale, unlockLiquidity, getUserStake, getTotalStake, getTotalSupply, getTotalRewards, getUserRewards, getUnstakePayout, allowance, balanceOf, setupAffiliate, getConnections, getTokensEarned, getMostConnections, getMostTokensEarned, getAffiliate, getBalancePair, getSale, getTime, getUnlockablePercentage, tokenOwnershipToLocker, createDelta, executeDelta, voteDelta, toggleDelta, getDelta, getParamValues, getReturnValues, getLockerHex, getSaleHex, cTOKEN, cSTAKE, cSALE, cAFFILIATE, cLOCKER, cEVENT, WETH, getTokenVote, getCreationCost, subscribe, unsubscribe, getEventHex, getBlock, getEventCount, getEventParamNames, getEventPing, getApproveHex, getTokenName, connectWallet, hexBreak, setHexBreak, isUnsubscribed, getTransaction, delay, getVoteDuration, unapprove, subscribeToCreateDelta, subscribeToStake, addChain, connectWalletMobile } from './chain.js';
 import { ethers } from "ethers";
 var menuSubmitFunction;
 var currentZone = 'Home';
@@ -110,15 +110,33 @@ function displayZone(newZone) {
     document.getElementById('subscribeToContainer').style.display = 'none';
 
 }
-document.getElementById('connectWallet').addEventListener("click", async() => {
-    let isConnected;
+function toggleMenuConnectWallet() {
+    if (document.getElementById('connectWalletContainer').style.display == 'none' && document.getElementById('connectWallet').innerHTML != 'CONNECTED') {
+        document.getElementById('connectWalletContainer').style.display = 'block';
+    } else {
+        if (document.getElementById('connectWallet').innerHTML != 'CONNECTED') {
+            document.getElementById('connectWallet').innerHTML = 'CONNECT WALLET';
+        }
+        document.getElementById('connectWalletContainer').style.display = 'none';
+    }
+}
+async function selectWallet(func) {
     document.getElementById('connectWallet').innerHTML = 'CONNECTING';
-    isConnected = await connectWallet();
+    let isConnected = await func();
+    toggleMenuConnectWallet();
     if (isConnected) {
         document.getElementById('connectWallet').innerHTML = 'CONNECTED';
     } else {
         document.getElementById('connectWallet').innerHTML = 'CONNECT WALLET';
     }
+}
+document.getElementById('connectWallet').addEventListener("click", (e) => {e.preventDefault(); toggleMenuConnectWallet();});
+document.getElementById('connectWalletExit').addEventListener("click", (e) => {e.preventDefault(); toggleMenuConnectWallet();});
+document.getElementById('connectWalletMoblie').addEventListener("click", async() => {
+    selectWallet(connectWalletMobile);
+});
+document.getElementById('connectWalletDefault').addEventListener("click", async() => {
+    selectWallet(connectWallet);
 });
 
 let eLinkTest = document.getElementsByName('linkTest');
@@ -130,15 +148,51 @@ let eLinkApprove = document.getElementsByName('linkApprove');
 let eLinkAffiliate = document.getElementsByName('linkAffiliate');
 let eLinkLocker = document.getElementsByName('linkLocker');
 let eLinkEvent = document.getElementsByName('linkEvent');
-eLinkTest.forEach((e) => {e.addEventListener("click", () => {displayZone('Test')})});
-eLinkHome.forEach((e) => {e.addEventListener("click", () => {displayZone('Home'); menuClose()})});
-eLinkSocial.forEach((e) => {e.addEventListener("click", () => {displayZone('Social'); menuClose()})});
-eLinkSale.forEach((e) => {e.addEventListener("click", () => {displayZone('Sale')})});
-eLinkStake.forEach((e) => {e.addEventListener("click", () => {displayZone('Stake')})});
-eLinkApprove.forEach((e) => {e.addEventListener("click", () => {displayZone('Approve')})});
-eLinkAffiliate.forEach((e) => {e.addEventListener("click", () => {displayZone('Affiliate')})});
-eLinkLocker.forEach((e) => {e.addEventListener("click", () => {displayZone('Locker')})});
-eLinkEvent.forEach((e) => {e.addEventListener("click", () => {displayZone('Event')})});
+eLinkTest.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Test');
+    document.getElementById('toggleHex').style.display = 'none';
+    document.getElementById('toggleStats').style.display = 'none';
+})});
+eLinkHome.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Home');
+    document.getElementById('toggleHex').style.display = 'none';
+    document.getElementById('toggleStats').style.display = 'none';
+})});
+eLinkSocial.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Social');
+    document.getElementById('toggleHex').style.display = 'none';
+    document.getElementById('toggleStats').style.display = 'none';
+})});
+eLinkSale.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Sale');
+    document.getElementById('toggleHex').style.display = 'flex';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
+eLinkStake.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Stake');
+    document.getElementById('toggleHex').style.display = 'none';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
+eLinkApprove.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Approve');
+    document.getElementById('toggleHex').style.display = 'flex';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
+eLinkAffiliate.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Affiliate');
+    document.getElementById('toggleHex').style.display = 'none';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
+eLinkLocker.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Locker');
+    document.getElementById('toggleHex').style.display = 'flex';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
+eLinkEvent.forEach((e) => {e.addEventListener("click", () => {
+    displayZone('Event');
+    document.getElementById('toggleHex').style.display = 'flex';
+    document.getElementById('toggleStats').style.display = 'flex';
+})});
 
 //MENU
 function menuOpen(placeholders, title, description) {
@@ -235,10 +289,6 @@ async function statsUpdate() {
             document.getElementById('unstakableUser').innerHTML = (+ethers.utils.formatEther(unstakePayout)).toExponential(2) + ' tokens';
             document.getElementById('rewardsUser').innerHTML = (+ethers.utils.formatEther(userRewards)).toExponential(2) + ' tokens';
         
-        } else if (currentZone == 'Test') {
-            statsClose();
-        } else if (currentZone == 'Home') {
-            statsClose();
         }
     } catch (e) {
         handleError(e);
@@ -643,127 +693,191 @@ document.getElementById('addChainTestBNB').addEventListener("click", async() => 
 
 //SALE ZONE
 document.getElementById('newSale').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Amount of tokens to Sell';
-    placeholders[1] = 'Token address to Sell';
-    placeholders[2] = 'Token address to Pair';
-    placeholders[3] = 'Router address of Swap';
-    placeholders[4] = 'Percent of sale into Liquidity';
-    placeholders[5] = 'Duration of sale in Seconds';
-    menuOpen(placeholders, 'NEW SALE', 'Create a presale pair.');
-    menuSubmitFunction = newSale;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Amount of tokens to Sell';
+        placeholders[1] = 'Token address to Sell';
+        placeholders[2] = 'Token address to Pair';
+        placeholders[3] = 'Router address of Swap';
+        placeholders[4] = 'Percent of sale into Liquidity';
+        placeholders[5] = 'Duration of sale in Seconds';
+        menuOpen(placeholders, 'NEW SALE', 'Create a presale pair.');
+        menuSubmitFunction = newSale;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('joinSale').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Amount of tokens to Exchange';
-    placeholders[1] = 'Token address to Buy';
-    placeholders[2] = 'Token address to Exchange';
-    menuOpen(placeholders, 'JOIN SALE', 'Buy a share of this presale.');
-    menuSubmitFunction = joinSale;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Amount of tokens to Exchange';
+        placeholders[1] = 'Token address to Buy';
+        placeholders[2] = 'Token address to Exchange';
+        menuOpen(placeholders, 'JOIN SALE', 'Buy a share of this presale.');
+        menuSubmitFunction = joinSale;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('endSale').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Token address of Sale';
-    menuOpen(placeholders, 'END SALE', 'Complete the sale and add liquidity.');
-    menuSubmitFunction = endSale;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Token address of Sale';
+        menuOpen(placeholders, 'END SALE', 'Complete the sale and add liquidity.');
+        menuSubmitFunction = endSale;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('claimSale').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Token address of Sale';
-    menuOpen(placeholders, 'CLAIM SALE', 'Claim tokens after sale completion.');
-    menuSubmitFunction = claimSale;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Token address of Sale';
+        menuOpen(placeholders, 'CLAIM SALE', 'Claim tokens after sale completion.');
+        menuSubmitFunction = claimSale;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('unlockLiquidity').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Token address of Lock';
-    menuOpen(placeholders, 'UNLOCK LIQUIDITY', 'Remove liquidity from the swap pool.');
-    menuSubmitFunction = unlockLiquidity;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Token address of Lock';
+        menuOpen(placeholders, 'UNLOCK LIQUIDITY', 'Remove liquidity from the swap pool.');
+        menuSubmitFunction = unlockLiquidity;
+    } else {
+        menuClose();
+    }
 });
 
 
 //STAKE ZONE
 document.getElementById('stake').addEventListener("click", () => {
-    let placeholders = [];
-    placeholders[0] = 'Tokens to Stake';
-    menuOpen(placeholders, 'STAKE', 'Lock tokens for 1 year to obtain revenue.');
-    menuSubmitFunction = stake;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Tokens to Stake';
+        menuOpen(placeholders, 'STAKE', 'Lock tokens for 1 year to obtain revenue.');
+        menuSubmitFunction = stake;    
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('unstake').addEventListener("click", async() => {
-    let placeholders = [];
-    menuOpen(placeholders, 'UNSTAKE', 'Unlock tokens and send fee to stakers.');
-    menuSubmitFunction = unstake;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        menuOpen(placeholders, 'UNSTAKE', 'Unlock tokens and send fee to stakers.');
+        menuSubmitFunction = unstake;        
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('claimStake').addEventListener("click", async() => {
-    let placeholders = [];
-    menuOpen(placeholders, 'CLAIM REWARDS', 'Collect staking rewards.');
-    menuSubmitFunction = claimStake;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        menuOpen(placeholders, 'CLAIM REWARDS', 'Collect staking rewards.');
+        menuSubmitFunction = claimStake;
+    } else {
+        menuClose();
+    }
 });
 
 
 //APPROVAL ZONE
 document.getElementById('approve').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Amount of Tokens';
-    placeholders[1] = 'Contract address to Allow';
-    placeholders[2] = 'Token address to Approve';
-    menuOpen(placeholders, 'APPROVE', 'Grant token access to a contract.');
-    menuSubmitFunction = approve;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Amount of Tokens';
+        placeholders[1] = 'Contract address to Allow';
+        placeholders[2] = 'Token address to Approve';
+        menuOpen(placeholders, 'APPROVE', 'Grant token access to a contract.');
+        menuSubmitFunction = approve;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('unapprove').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Contract address to Allow';
-    placeholders[1] = 'Token address to Approve';
-    menuOpen(placeholders, 'UNAPPROVE', 'Remove token access to a contract.');
-    menuSubmitFunction = unapprove;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Contract address to Allow';
+        placeholders[1] = 'Token address to Approve';
+        menuOpen(placeholders, 'UNAPPROVE', 'Remove token access to a contract.');
+        menuSubmitFunction = unapprove;
+    } else {
+        menuClose();
+    }
 });
 
 
 //AFFILIATE ZONE
 document.getElementById('setAffiliate').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Token address of Referral';
-    placeholders[1] = 'Wallet address of Affiliate';
-    menuOpen(placeholders, 'SET AFFILIATE', 'Redistribute some transfer fees to affiliate.');
-    menuSubmitFunction = setupAffiliate;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Token address of Referral';
+        placeholders[1] = 'Wallet address of Affiliate';
+        menuOpen(placeholders, 'SET AFFILIATE', 'Redistribute some transfer fees to affiliate.');
+        menuSubmitFunction = setupAffiliate;
+    } else {
+        menuClose();
+    }
 });
 
 
 //LOCKER ZONE
 document.getElementById('voteDelta').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'ID of Delta';
-    placeholders[1] = 'Agree to Change: yes or no';
-    menuOpen(placeholders, 'VOTE DELTA', 'Vote to change state of contract. (75%+)');
-    menuSubmitFunction = voteDelta;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'ID of Delta';
+        placeholders[1] = 'Agree to Change: yes or no';
+        menuOpen(placeholders, 'VOTE DELTA', 'Vote to change state of contract. (75%+)');
+        menuSubmitFunction = voteDelta;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('createDelta').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Contract to Alter';
-    placeholders[1] = 'Function to Execute';
-    placeholders[2] = 'List of Parameter Types: address, uint256';
-    placeholders[3] = 'List of Parameter Values: 0x0, 1000000000000';
-    placeholders[4] = 'List of Return Types: bool, string';
-    menuOpen(placeholders, 'CREATE DELTA', 'Initialize a vote to alter the contract.');
-    menuSubmitFunction = createDelta;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Contract to Alter';
+        placeholders[1] = 'Function to Execute';
+        placeholders[2] = 'List of Parameter Types: address, uint256';
+        placeholders[3] = 'List of Parameter Values: 0x0, 1000000000000';
+        placeholders[4] = 'List of Return Types: bool, string';
+        menuOpen(placeholders, 'CREATE DELTA', 'Initialize a vote to alter the contract.');
+        menuSubmitFunction = createDelta;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('toggleDelta').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Contract to Alter';
-    menuOpen(placeholders, 'TOGGLE VOTING', 'Enable or disable votes with a vote.');
-    menuSubmitFunction = toggleDelta;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Contract to Alter';
+        menuOpen(placeholders, 'TOGGLE VOTING', 'Enable or disable votes with a vote.');
+        menuSubmitFunction = toggleDelta;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('executeDelta').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'ID of Delta';
-    menuOpen(placeholders, 'EXECUTE DELTA', 'Call contract function after voting period.');
-    menuSubmitFunction = executeDelta;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'ID of Delta';
+        menuOpen(placeholders, 'EXECUTE DELTA', 'Call contract function after voting period.');
+        menuSubmitFunction = executeDelta;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('transferOwnership').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Contract to Lock';
-    placeholders[1] = 'Token for Vote';
-    menuOpen(placeholders, 'LOCK CONTRACT', 'Hand over contract ownership to your community.');
-    menuSubmitFunction = tokenOwnershipToLocker;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Contract to Lock';
+        placeholders[1] = 'Token for Vote';
+        menuOpen(placeholders, 'LOCK CONTRACT', 'Hand over contract ownership to your community.');
+        menuSubmitFunction = tokenOwnershipToLocker;
+    } else {
+        menuClose();
+    }
 });
 
 //EVENT ZONE
@@ -774,7 +888,8 @@ function toggleSubscribeTo() {
         document.getElementById('subscribeToContainer').style.display = 'none';
     }
 }
-document.getElementById('subscribeTo').addEventListener("click", async() => {toggleSubscribeTo()});
+document.getElementById('subscribeTo').addEventListener("click", (e) => {e.preventDefault(); toggleSubscribeTo();});
+document.getElementById('subscribeToExit').addEventListener("click", (e) => {e.preventDefault(); toggleSubscribeTo();});
 document.getElementById('subscribeToCreateDelta').addEventListener("click", async() => {
     let placeholders = [];
     placeholders[0] = 'Token with Voting Power';
@@ -790,20 +905,28 @@ document.getElementById('subscribeToStake').addEventListener("click", async() =>
 });
 
 document.getElementById('subscribeEvent').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = 'Contract with Event';
-    placeholders[1] = 'Name of Event';
-    placeholders[2] = 'List of Parameter Types: address indexed, uint';
-    placeholders[3] = 'List of Parameter Names: wallet, wei';
-    placeholders[4] = 'List of Filter Values: null, 10000000';
-    menuOpen(placeholders, 'SUBSCRIBE', 'Choose an event with filters.');
-    menuSubmitFunction = subscribe;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = 'Contract with Event';
+        placeholders[1] = 'Name of Event';
+        placeholders[2] = 'List of Parameter Types: address indexed, uint';
+        placeholders[3] = 'List of Parameter Names: wallet, wei';
+        placeholders[4] = 'List of Filter Values: null, 10000000';
+        menuOpen(placeholders, 'SUBSCRIBE', 'Choose an event with filters.');
+        menuSubmitFunction = subscribe;
+    } else {
+        menuClose();
+    }
 });
 document.getElementById('unsubscribeEvent').addEventListener("click", async() => {
-    let placeholders = [];
-    placeholders[0] = '# of Subscription';
-    menuOpen(placeholders, 'UNSUBSCRIBE', 'Silence an event forever.');
-    menuSubmitFunction = unsubscribe;
+    if (document.getElementById('menuContainer').style.display == 'none') {
+        let placeholders = [];
+        placeholders[0] = '# of Subscription';
+        menuOpen(placeholders, 'UNSUBSCRIBE', 'Silence an event forever.');
+        menuSubmitFunction = unsubscribe;
+    } else {
+        menuClose();
+    }
 });
 
 //HOME ZONE
