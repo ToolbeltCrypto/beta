@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { EthereumProvider } from '@walletconnect/ethereum-provider'
 import { bypassMode, hexRowAdd } from "./index.js";
 import abi_erc20 from "../ABI/abi_erc20.json";
 import abi_ownable from "../ABI/abi_ownable.json";
@@ -14,9 +15,21 @@ import bc_sale from "../ABI/bc_sale.json";
 import bc_affiliate from "../ABI/bc_affiliate.json";
 import bc_locker from "../ABI/bc_locker.json";
 import bc_event from "../ABI/bc_event.json";
-import { fetchJson } from "ethers/lib/utils.js";
 export var hexBreak = false;
 export var loopEventBlock;
+
+// matic
+// const alchemyApiKey = '';
+// const provider = new ethers.providers.AlchemyProvider('maticmum', alchemyApiKey);
+// export var WETH = '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889';
+// let swapRouter = '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
+// let contracts = ['0x6639BB4bD2515adE006cB5d5270D51678Aa12e6a', '0x0b4434aAc36B65cD7648cE90365397FE9b9087F4', '0x345B68aC19AEBDAd5b23BAd3CF72AdF44bf0A232', '0x4813FaF0AfB661153AEac94c9f07314c98510DB2', '0x4C71A2FCdC8ccD4AACd0b07C6ba41c999e76429A', '0x54Fa8812bb9b34C6EC3b891EedDDb26fe0Cb8AF8'];
+
+// bsc
+// const provider = new ethers.providers.JsonRpcProvider('');
+export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'; //change on mainnet?
+let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1'; //change on mainnet?
+let contracts = ['0x3122eE54C5bD358211d84CAEb7235FD656ca1B09', '0x36a9e6BE2767F6E6a3c672DeD2979473cd0e892e', '0xd6c9c36C3a101405D763b683Fe9d5549e06628cE', '0x05aBF87253B56cC3ccbD6EDD059577E626bAAd3F', '0x43aeed08B955E0aeF89cc08E74922CC9d8399e56', '0x59FC270A17FffE86411b90BF2cba435904447E58'];
 
 /* SIGNER */
 var provider;
@@ -24,13 +37,11 @@ var wallet;
 var chainID;
 
 /* WALLET */
-var privateKeys = ['z', 'z'];
-
-export var WETH = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'; //change on mainnet?
-let swapRouter = '0xD99D1c33F9fC3444f8101754aBC46c52416550D1'; //change on mainnet?
-let contracts = ['0x6639BB4bD2515adE006cB5d5270D51678Aa12e6a', '0x0b4434aAc36B65cD7648cE90365397FE9b9087F4', '0x345B68aC19AEBDAd5b23BAd3CF72AdF44bf0A232', '0x4813FaF0AfB661153AEac94c9f07314c98510DB2', '0x4C71A2FCdC8ccD4AACd0b07C6ba41c999e76429A', '0x54Fa8812bb9b34C6EC3b891EedDDb26fe0Cb8AF8'];
-
-
+// var privateKeys = ['', ''];
+// var wallet2 = new ethers.Wallet(privateKeys[0], provider);
+// var wallet = new ethers.Wallet(privateKeys[1], provider);
+// wallet._address = wallet.address;
+// var chainID = provider.getNetwork.chainId;
 
 
 //wallet connect support?
@@ -41,7 +52,7 @@ export var cAFFILIATE;
 export var cLOCKER;
 export var cEVENT;
 
-async function loadContracts() {
+function loadContracts() {
     cTOKEN = new ethers.Contract(contracts[0], abi_token, wallet);
     cSTAKE = new ethers.Contract(contracts[1], abi_stake, wallet);
     cSALE = new ethers.Contract(contracts[2], abi_sale, wallet);
@@ -57,7 +68,7 @@ export async function connectWallet() {
             provider = new ethers.providers.Web3Provider(window.ethereum);
             chainID = provider.getNetwork.chainId;
             wallet = provider.getSigner((await provider.send("eth_requestAccounts", []))[0]);
-            await loadContracts();
+            loadContracts();
 
             provider.on('accountsChanged', async() => {
                 await provider.send("eth_requestAccounts", []);
@@ -78,6 +89,36 @@ export async function connectWallet() {
     }
 }
 
+export async function connectWalletMobile() { //working? appears twice after close? grey out screen?
+    try {
+        provider = await EthereumProvider.init({
+            projectId: '9cb2b2dd7e7d5b6124d546908cf695bf',
+            chains: [80001],
+            showQrModal: true,
+            qrModalOptions: {
+                themeMode: 'dark',
+                explorerRecommendedWalletIds: [
+                    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96',
+                    '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0',
+                    '225affb176778569276e484e1b92637ad061b01e13a048b35a9d280c3b58970f'
+                ]
+            }
+        });
+
+        console.log(provider);
+        chainID = provider.chainId;
+        console.log(await provider.enable());
+        wallet = await provider.request({ method: 'eth_requestAccounts' });
+        console.log(wallet);
+        loadContracts();
+        await getEventPing();
+        return true;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }  
+}
+
 export async function addChain(nativeCurrency) {
     let cID;
     let cName;
@@ -90,7 +131,7 @@ export async function addChain(nativeCurrency) {
     if (nativeCurrency == 'tBNB') { 
         cID = '0x61';
         cName = 'BNB Smart Chain Testnet';
-        rUrls = ['https://endpoints.omniatech.io/v1/bsc/testnet/public']; //slow after earlier querys?
+        rUrls = ['https://endpoints.omniatech.io/v1/bsc/testnet/public']; //slow after earlier querys (event)?
         bUrls = ['https://testnet.bscscan.com'];
         nName = 'testnet BNB';
         nSymbol = 'tBNB';
@@ -492,7 +533,7 @@ export async function unsubscribe(inputParams) {
 }
 async function verifyEvent(contractAddress, params) {
     let eventParams = 'event ' + params.split(', ').join(',');
-    let fetch = (await fetchJson('https://api-testnet.bscscan.com/api?module=contract&action=getabi&address=' + contractAddress + '&apikey=NT2AZKZKAV7F2FS37245TEVHGVYJAXBYD4')).result; //change on mainnet?
+    let fetch = (await ethers.utils.fetchJson('https://api-testnet.bscscan.com/api?module=contract&action=getabi&address=' + contractAddress + '&apikey=NT2AZKZKAV7F2FS37245TEVHGVYJAXBYD4')).result; //change on mainnet?
     if (fetch != 'Contract source code not verified') {
         const iface = new ethers.utils.Interface(fetch);
         const abi = iface.format('minimal');
@@ -794,12 +835,13 @@ export async function testAll() {
     try {
         // await deploy();
         // await setupContractDependencies();
+        // loadContracts();
+
+        await approve(['10000000', cSTAKE.address, cTOKEN.address]);
+        await stake(['10']);
 
         // await approve(['10000000', cSALE.address, cTOKEN.address]);
         // await approve(['10000000', cSALE.address, WETH]);
-        // await approve(['10000000', cSTAKE.address, cTOKEN.address]);
-        // await stake(['100']);
-
         // await addIgnoreFee(cSALE.address);
         // await newSale(['100', cTOKEN.address, WETH, swapRouter, '80', '10']);
         // await joinSale(['0.00001', cTOKEN.address, WETH]);
@@ -816,7 +858,7 @@ export async function testAll() {
         // await tokenOwnershipToLocker([cTOKEN.address, cTOKEN.address]);
         // await tokenOwnershipToLocker([cLOCKER.address, cTOKEN.address]);
         // await createAndExecuteDelta(cTOKEN.address, 'balanceOf', 'address', '0xfFEd77aD4A4FbCB255eBb9Ba40de4430Df34E7E4', 'uint');
-        await createAndExecuteDelta(cLOCKER.address, 'setStakeVotePercent', 'uint', '10000', '');
+        // await createAndExecuteDelta(cLOCKER.address, 'setStakeVotePercent', 'uint', '10000', '');
         // await createAndExecuteDelta(cLOCKER.address, 'transferOwnership', 'address', wallet._address, '');
         // // await toggleAndExecuteDelta(cTOKEN.address);
 
@@ -829,11 +871,10 @@ export async function testAll() {
         // await subscribe([cSALE.address, 'UnlockLiquidity', 'address indexed, uint, uint', 'tokenSale ,weiToWallet, weiFee', cTOKEN.address]);
         // await subscribe([cAFFILIATE.address, 'AffiliateDistribution', 'address indexed, address indexed, address indexed, uint', 'token,affiliate,wallet,weiIn', cTOKEN.address]);
         // await subscribe([cEVENT.address, 'SubscribeEvent', 'address indexed, address indexed', 'contract, wallet', 'null, ' + wallet._address]);
-        // await subscribe([WETH, 'Approval', 'address indexed, address indexed, uint256', 'wallet, contract, wei', '']);
+        await subscribe([WETH, 'Approval', 'address indexed, address indexed, uint256', 'wallet, contract, wei', '']);
 
         // await stake(['100']);
         // await transfer('100', wallet2.address);
-        // await unstake();
 
         // //error below? enable affiliate before unlock
         // await unlockLiquidity([cTOKEN.address]);
