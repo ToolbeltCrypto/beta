@@ -6,9 +6,10 @@
     "devDependencies": {
         "webpack": "^5.75.0",
         "webpack-cli": "^5.0.0"
-    }
-    ,
+    },
     "dependencies": {
+        "@walletconnect/ethereum-provider": "^2.9.2",
+        "@walletconnect/modal": "^2.6.1",
         "webpack-dev-server": "^4.11.1"
     }
 }
