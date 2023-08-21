@@ -24,6 +24,10 @@ html {
     user-select: none;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+}
+
 body {
     background-color: var(--white);
     font-family: arial, sans-serif; 
@@ -120,6 +124,15 @@ h1 {
     cursor: pointer;
 } .exitButton:hover {
     background-color: var(--color2);
+}
+
+.video {
+    display: initial;
+    width: 384px;
+    height: 256px;
+    margin: 48px;
+    border-radius: 8px;
+    border: none;
 }
 
 .zone {
