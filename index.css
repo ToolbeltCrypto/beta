@@ -19,30 +19,34 @@ html {
     --color4: #224f23;
     --white: #f2f2f2;
     --black: #333;
-    --blackTransparent: #33333380;
+    --blackT: #33333380;
+    --font1: 'Lucida Sans'; 
+    --font2: 'Lucida Grande';
+    --font3: 'Lucida Sans Regular';
     cursor: default;
     user-select: none;
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-body {
+} body {
     background-color: var(--white);
-    font-family: arial, sans-serif; 
+    font-family: var(--font1); 
     margin: 0;
     padding: 0;
-}
-
-br {
+} br {
     content: "";
     margin: 2em;
     display: block;
     font-size: 24%;
+} h1 {
+    font-family: var(--font3);
+    font-size: 36px;
+    font-weight: 500;
+    margin-top: 128px;
+    margin-bottom: -4px;
+    padding-top: 20px;
 }
 
-::placeholder {
+::-webkit-scrollbar {
+    width: 0px;
+} ::placeholder {
     color: var(--color4);
     text-align: center;
 } ::-ms-input-placeholder {
@@ -64,11 +68,8 @@ a {
     color: var(--white);
 } a p {
     color: var(--white);
-}
-
-h1 {
-    margin-top: 128px;
-    padding-top: 20px;
+} p {
+    margin-bottom: 16px;
 }
 
 [type="button"] {
@@ -88,6 +89,7 @@ h1 {
 } [type="button"]:hover {
     background: var(--color2);
 } input {
+    position: relative;
     color: var(--white);
     width: 100%;
     height: 32px;
@@ -99,13 +101,9 @@ h1 {
     font-weight: 300;
     padding: 12px 8px;
     border-radius: 5px;
-    box-shadow: 0 4px 16px 2px rgba(0,0,0,0.2);
-    transition: box-shadow 0.8s ease;
     user-select: text;
 } input:focus {
     outline: none;
-    box-shadow: 0 4px 16px 2px rgba(0,0,0,0.55);
-    transition: box-shadow 0.8s ease;
 }
 
 .exitButton {
@@ -146,17 +144,57 @@ h1 {
     background-color: var(--black);
     width: 100%;
     padding: 16px;
-    overflow: hidden;
-} .navbar div {
-    float: left;
+} .navbar [type="main"] {
+    display: inline-block;
     color: var(--white);
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 14px 16px;
+    font-size: 24px;
+    font-weight: 100;
+    font-family: var(--font2);
     cursor: pointer;
-} .navbar div:hover {
+} .navbar [type="main"]:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.dropdownContainer {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+} .dropdownContainer:hover .dropdownForm {
+    display: block;
+} .dropdownToggle {
+    margin: 0;
+    padding: 14px 28px;
+    color: var(--white);
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+    font-family: var(--font2);
+} .dropdownToggle:hover {
+    background-color: var(--white);
+    color: var(--black);
+} .dropdownForm {
+    display: none;
+    position: absolute;
+    background-color: var(--black);
+    color: var(--white);
+    min-width: 100%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font2);
+    z-index: 1;
+} .dropdownForm:hover .dropdownForm {
+    display: block;
+} .dropdownForm div {
+    padding: 14px 16px;
+} .dropdownForm div:hover {
     background-color: var(--white);
     color: var(--black);
 }
@@ -204,7 +242,7 @@ h1 {
     margin-bottom: -4px;
 } .homeTitle {
     font-weight: 500;
-    font-family: serif;
+    font-family: var(--font2);
     font-size: 28px;
     margin: 8px;
 } .homeDescriptor {
@@ -214,17 +252,78 @@ h1 {
     margin-bottom: -8px;
 }
 
+.optionMenuContainer {
+    position: sticky;
+    height: max-content;
+    width: 380px;
+    background-color: var(--black);
+    margin: 32px;
+    padding: 8px;
+    border-radius: 12px;
+} .optionMenuForm {
+    text-align: center;
+    background-color: inherit;
+    margin: 0;
+    padding: 16px 32px;
+    padding-bottom: 8px;
+    border-radius: inherit;
+} .optionMenuForm [type="button"] {
+    font-family: var(--font3);
+    margin-top: 4px;
+    padding: 0px;
+    height: 32px;
+    width: 256px;
+} .optionMenuForm input {
+    margin: 0;
+    margin-top: 4px;
+} .optionMenuTitle {
+    color: var(--white);
+    font-size: 32px;
+    font-family: var(--font2);
+    font-weight: 500;
+    padding: -16px;
+    margin: 0;
+    margin-top: -4px;
+} .optionMenuDescription {
+    color: var(--white);
+    font-size: 12px;
+    padding: -16px;
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+} #subscribeToContainer {
+    position: sticky;
+    height: max-content;
+    width: 380px;
+    background-color: var(--black);
+    margin: 32px;
+    padding: 8px;
+    border-radius: 12px;
+    grid-row: 1;
+    grid-column: 4;
+} #connectWalletContainer {
+    position: fixed;
+    background-color: var(--black);
+    height: max-content;
+    width: 380px;
+    right: 0;
+    bottom: 50%;
+    margin: 12px;
+    padding: 8px;
+    border-radius: 12px;
+}
+
 .socialPage {
     background-color: var(--black);
     color: var(--white);
-    border-radius: 12px;
+    border-radius: 8px;
     margin: 8px;
     padding: 16px;
     padding-top: 8px;
 } .socialWrap {
     margin: 16px;
     background: var(--color1);
-    border-radius: 8px;
+    border-radius: 4px;
     width: calc(100% - 32px);
 } .socialWrap:hover {
     background: var(--color2);
@@ -240,8 +339,8 @@ h1 {
     display: none;
 } .socialTitle {
     color: var(--white);
-    font-weight: 500;
-    font-family: serif;
+    font-weight: 300;
+    font-family: var(--font2);
     font-size: 28px;
     padding: 8px;
     margin: 8px;
@@ -301,7 +400,7 @@ h1 {
 } #menuForm #menuTitle {
     color: var(--white);
     font-size: 32px;
-    font-family: serif;
+    font-family: var(--font2);
     font-weight: 500;
     padding: -16px;
     margin: 0;
@@ -309,6 +408,7 @@ h1 {
 } #menuForm #menuDescription {
     color: var(--white);
     font-size: 12px;
+    font-weight: 100;
     padding: -16px;
     margin: 0;
     margin-top: 4px;
@@ -316,90 +416,6 @@ h1 {
 } #menuForm [type="button"] {
     margin-top: 4px;
 } #menuForm input {
-    margin: 0;
-    margin-top: 4px;
-}
-
-#subscribeToContainer {
-    position: sticky;
-    height: max-content;
-    width: 380px;
-    background-color: var(--black);
-    margin: 32px;
-    padding: 8px;
-    border-radius: 12px;
-    grid-row: 1;
-    grid-column: 4;
-} #subscribeToForm {
-    text-align: center;
-    background-color: inherit;
-    margin: 0;
-    padding: 16px 32px;
-    padding-bottom: 8px;
-    border-radius: inherit;
-} #subscribeToForm #subscribeToTitle {
-    color: var(--white);
-    font-size: 32px;
-    font-family: serif;
-    font-weight: 500;
-    padding: -16px;
-    margin: 0;
-    margin-top: -4px;
-} #subscribeToForm #subscribeToDescription {
-    color: var(--white);
-    font-size: 12px;
-    padding: -16px;
-    margin: 0;
-    margin-top: 4px;
-    margin-bottom: 4px;
-} #subscribeToForm [type="button"] {
-    margin-top: 4px;
-    padding: 0px;
-    height: 32px;
-    width: 256px;
-} #subscribeToForm input {
-    margin: 0;
-    margin-top: 4px;
-}
-
-#connectWalletContainer {
-    position: fixed;
-    background-color: var(--black);
-    height: max-content;
-    width: 380px;
-    right: 0;
-    bottom: 50%;
-    margin: 12px;
-    padding: 8px;
-    border-radius: 12px;
-} #connectWalletForm {
-    text-align: center;
-    background-color: inherit;
-    margin: 0;
-    padding: 16px 32px;
-    padding-bottom: 8px;
-    border-radius: inherit;
-} #connectWalletForm #connectWalletTitle {
-    color: var(--white);
-    font-size: 32px;
-    font-family: serif;
-    font-weight: 500;
-    padding: -16px;
-    margin: 0;
-    margin-top: -4px;
-} #connectWalletForm #connectWalletDescription {
-    color: var(--white);
-    font-size: 12px;
-    padding: -16px;
-    margin: 0;
-    margin-top: 4px;
-    margin-bottom: 4px;
-} #connectWalletForm [type="button"] {
-    margin-top: 4px;
-    padding: 0px;
-    height: 32px;
-    width: 256px;
-} #connectWalletForm input {
     margin: 0;
     margin-top: 4px;
 }
@@ -423,7 +439,7 @@ h1 {
 } #statsForm #statsTitle {
     color: var(--white);
     font-size: 32px;
-    font-family: serif;
+    font-family: var(--font2);
     font-weight: 500;
     padding: -16px;
     margin: 0;
@@ -438,7 +454,7 @@ h1 {
 } .description {
     font-size: 12px;
 } #statsForm .description {
-    margin-top: -4px;
+    margin-top: -8px;
     margin-bottom: 8px;
 } .statsDescriptor {
     font-weight: 550;
@@ -466,12 +482,11 @@ h1 {
     grid-column: 1;
 } #hexForm {
     text-align: center;
-    background-color: transparent;
     margin: 0;
     padding: 16px 32px;
     border-radius: inherit;
 } #hexForm input {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 } #hexFilterButton {
     width: 100%;
     margin: 0;

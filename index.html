@@ -1,4 +1,3 @@
-<!-- ? ./public/ -->
 <link rel="stylesheet" href="./index.css"></link>
 
 <!-- add images? how to videos on each dapp? -->
@@ -109,7 +108,7 @@
                 <div class="homeContainer" style="grid-column: 2; grid-row: 2;">    
                     <div class="homeContainerToggle" id="homeTrack"> 
                         <p class="homeTitle">TRACK</p>
-                        <p>Storing an incredible amount of data, the blockchain requires tools to be decoded.</p>
+                        <p>With an incredible amount of data, blockchain requires tools for decoding.</p>
                     </div>
 
                     <div class="homeWrap" id="homeWrapTrack">
@@ -214,14 +213,12 @@
                     <p class="socialTitle">RESEARCH</p>
                         <div name="socialWrapToggle">
 
-                        <!-- ? ./public/ -->
                         <a target="_blank" href="./roadmap.png">
                             <div class="socialWrap2">
                                 <p class="socialDescriptor">Roadmap</p>
                             </div>
                         </a>
 
-                        <!-- ? ./public/ -->
                         <a target="_blank" href="./whitepaper.pdf">
                             <div class="socialWrap2">
                                 <p class="socialDescriptor">Whitepaper</p>
@@ -526,11 +523,11 @@
         </div>
 
         <!-- SUBSCRIBE TO -->
-        <div id="subscribeToContainer" style="display: none;">
-            <form id="subscribeToForm">
+        <div class="optionMenuContainer" id="subscribeToContainer" style="display: none;">
+            <form class="optionMenuForm" id="subscribeToForm">
                 <button id="subscribeToExit" class="exitButton">X</button>
-                <p id="subscribeToTitle">SUBSCRIBE TO</p>
-                <p id="subscribeToDescription">Track blockchain events in a simplified fashion.</p>
+                <p class="optionMenuTitle" id="subscribeToTitle">SUBSCRIBE TO</p>
+                <p class="optionMenuDescription" id="subscribeToDescription">Track blockchain events in a simplified fashion.</p>
                 <br></br>
                 <button id="subscribeToCreateDelta" type="button">CreateDelta</button>
                 <button id="subscribeToStake" type="button">Stake</button>
@@ -543,28 +540,27 @@
 
     <!-- NAV -->
     <div class="navbar">
-        <div name="linkHome" tabindex="0">INFO</div>
-        <div name="linkSocial" tabindex="0">PORTAL</div>
-        <div name="linkAffiliate" tabindex="0">AFFILIATE</div>
-        <div name="linkApprove" tabindex="0">APPROVAL</div>
-        <div name="linkEvent" tabindex="0">EVENT</div>
-        <div name="linkLocker" tabindex="0">LOCKER</div>
-        <div name="linkSale" tabindex="0">PRESALE</div>
-        <div name="linkStake" tabindex="0">STAKING</div>
-        <div name="linkTest" tabindex="0">TESTING</div>
-        <div id="connectWallet" tabindex="0" style="float: right; margin-right: 32px;">CONNECT WALLET</div>
-    </div>
-
-    <div id="connectWalletContainer" style="display: none;">
-        <form id="connectWalletForm">
-            <button id="connectWalletExit" class="exitButton">X</button>
-            <p id="connectWalletTitle">CONNECT WALLET</p>
-            <p id="connectWalletDescription">Pick a wallet type to access the blockchain.</p>
-            <br></br>
-            <button id="connectWalletDefault" type="button">Browser Extension</button>
-            <button id="connectWalletMoblie" type="button">Mobile Application</button>
-            <br></br>
-        </form>
+        <div name="linkHome" tabindex="0" type="main">HOME</div>
+        <div class="dropdownContainer">
+            <div class="dropdownToggle" tabindex="0">DAPPS</div>
+            <div class="dropdownForm" tabindex="0">
+                <div name="linkAffiliate" tabindex="0">AFFILIATE</div>
+                <div name="linkApprove" tabindex="0">APPROVAL</div>
+                <div name="linkEvent" tabindex="0">EVENT</div>
+                <div name="linkLocker" tabindex="0">LOCKER</div>
+                <div name="linkSale" tabindex="0">PRESALE</div>
+                <div name="linkStake" tabindex="0">STAKING</div>
+                <div name="linkTest" tabindex="0">TESTING</div>
+            </div>
+        </div>
+        <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
+        <div class="dropdownContainer" style="float: right; margin-right: 32px">
+            <div class="dropdownToggle" id="connectWallet" tabindex="0" >CONNECT WALLET</div>
+            <div class="dropdownForm" tabindex="0" style="font-family: var(--font1); font-weight: 100;">
+                <div id="connectWalletBrowser">Browser Extension</div>
+                <div id="connectWalletMoblie">Mobile Application</div>
+            </div>
+        </div>
     </div>
 
     <!-- ? add full screen mode for all widgets -->
@@ -574,6 +570,5 @@
             <div class="toggleButton" id="toggleBypass" tabindex="0">B</div>
         </div>
 
-    <!-- ? ./public/ -->
     <script type="application/javascript" src="./main.js"></script>
 </div>
