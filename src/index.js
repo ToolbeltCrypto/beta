@@ -9,7 +9,6 @@ var hexPage = 0;
 var hexPageSign = -1;
 var hexRow = 0;
 
-//catch all error function? to prevent metamask rpc error, connect wallet error
 //replace toolbelt with new name in all files?
 function handleError(error) {
     if (error.reason != undefined) {
@@ -18,7 +17,7 @@ function handleError(error) {
             alert('Connect wallet to access the blockchain.');
         } else {
             alert('ERROR: ' + error.reason);
-        }
+        } 
     } else if (error.message != undefined) {
         let eSplit = error.message.split(' ');
         if (eSplit.includes('status')) {
@@ -50,6 +49,11 @@ function findInputs(className) {
 function removeElements(className) {
     while (document.getElementsByClassName(className).length > 0) {
         document.getElementsByClassName(className)[0].remove();
+    }
+}
+function displayElements(className, display) {
+    for (let i=0; i < document.getElementsByClassName(className).length; i++) {
+        document.getElementsByClassName(className)[i].style.display = display;
     }
 }
 
@@ -93,50 +97,33 @@ function setupToggleDisplay(wrap) {
 }}})}}
 
 //NAV
-function displayRemoveZones() {
-    for (let i=0; i < document.getElementsByClassName('zone').length; i++) {document.getElementsByClassName('zone')[i].style.display = 'none';}
-    for (let i=0; i < document.getElementsByClassName('statsZone').length; i++) {document.getElementsByClassName('statsZone')[i].style.display = 'none';}
-}
 function displayZone(newZone) {
-    currentZone = newZone;
-    displayRemoveZones();
-    document.getElementById('zone' + currentZone).style.display = 'block';
-    try {
-        document.getElementById('stats' + currentZone).style.display = 'block';
-    } catch {}
     statsClose();
     hexClose();
     menuClose();
+    currentZone = newZone;
+    displayElements('zone', 'none');
+    displayElements('video', 'initial');
+    document.getElementById('zone' + currentZone).style.display = 'block';
     document.getElementById('subscribeToContainer').style.display = 'none';
 
-}
-function toggleMenuConnectWallet() {
-    if (document.getElementById('connectWalletContainer').style.display == 'none' && document.getElementById('connectWallet').innerHTML != 'CONNECTED') {
-        document.getElementById('connectWalletContainer').style.display = 'block';
-    } else {
-        if (document.getElementById('connectWallet').innerHTML != 'CONNECTED') {
-            document.getElementById('connectWallet').innerHTML = 'CONNECT WALLET';
-        }
-        document.getElementById('connectWalletContainer').style.display = 'none';
-    }
 }
 async function selectWallet(func) {
     document.getElementById('connectWallet').innerHTML = 'CONNECTING';
     let isConnected = await func();
-    toggleMenuConnectWallet();
+
     if (isConnected) {
+        //rejected metamask connection request still says connected?
         document.getElementById('connectWallet').innerHTML = 'CONNECTED';
     } else {
         document.getElementById('connectWallet').innerHTML = 'CONNECT WALLET';
     }
 }
-document.getElementById('connectWallet').addEventListener("click", (e) => {e.preventDefault(); toggleMenuConnectWallet();});
-document.getElementById('connectWalletExit').addEventListener("click", (e) => {e.preventDefault(); toggleMenuConnectWallet();});
+document.getElementById('connectWalletBrowser').addEventListener("click", async() => {
+    selectWallet(connectWallet);
+});
 document.getElementById('connectWalletMoblie').addEventListener("click", async() => {
     selectWallet(connectWalletMobile);
-});
-document.getElementById('connectWalletDefault').addEventListener("click", async() => {
-    selectWallet(connectWallet);
 });
 
 let eLinkTest = document.getElementsByName('linkTest');
@@ -197,6 +184,7 @@ eLinkEvent.forEach((e) => {e.addEventListener("click", () => {
 //MENU
 function menuOpen(placeholders, title, description) {
     menuClose();
+    displayElements('video', 'none');
     document.getElementById('menuContainer').style.display = 'block';
     document.getElementById('menuTitle').innerHTML = title;
     document.getElementById('menuDescription').innerHTML = description;
@@ -263,13 +251,16 @@ function toggleStats() {
     }
 }
 function statsOpen() {
+    displayElements('video', 'none');
     document.getElementById('toggleStats').innerHTML = 'X';
     document.getElementById('statsContainer').style.display = 'block';
+    try {document.getElementById('stats' + currentZone).style.display = 'block';} catch {}
     statsUpdate();
 }
 function statsClose() {
     document.getElementById('toggleStats').innerHTML = '&#128794;';
     document.getElementById('statsContainer').style.display = 'none';
+    try{document.getElementById('stats' + currentZone).style.display = 'none';} catch {}
 }
 async function statsUpdate() {
     try {
@@ -394,7 +385,7 @@ async function statsView() {
                 document.getElementById('eventBlock').innerHTML = block.toLocaleString("en-US").split(',').join(' ');
                 document.getElementById('eventBlockCircle').style.setProperty('--deg', 100*(1-(currentBlock-block)/currentBlock).toFixed() + '%');
                 document.getElementById('eventSignature').innerHTML = output.event + ' (' + await paramNamesPromise + ')';
-                document.getElementById('eventValues').innerHTML = '(' + output.args.slice('').join(', \n') + ')';
+                document.getElementById('eventValues').innerHTML = output.args.slice('').join(', \n');
                 document.getElementById('eventSignatureCircle').style = "background-color: var(--color1);";
                 document.getElementById('eventValuesCircle').style = "background-color: var(--color1);";
             } catch(e) {
@@ -423,7 +414,6 @@ for (let i = 0; i < statsViewElements.length; i++) {
 export function hexRowAdd() {
     hexRow += 1;
 }
-
 function toggleHex() {
     if (document.getElementById('toggleHex').innerHTML == 'X') {
         hexClose();
@@ -432,6 +422,7 @@ function toggleHex() {
     }
 }
 function hexOpen() {
+    displayElements('video', 'none');
     document.getElementById('toggleHex').innerHTML = 'X';
     document.getElementById('hexContainer').style.display = 'block';
     hexPage = 0;
@@ -446,10 +437,7 @@ function hexClose() {
     hexMap.clear();
 }
 function hexUpdate() {
-    let zones = document.getElementsByClassName('hexZone');
-    for (let i=0; i < zones.length; i++) {
-        zones[i].style.display = 'none';
-    }
+    displayElements('hexZone', 'none');
     if (currentZone == 'Approve') {
         document.getElementById('hexApprove').style.display = 'block';
         document.getElementById('hexFilterBreak').style.display = 'block';
@@ -470,20 +458,18 @@ function hexUpdate() {
         document.getElementById('hexFilterBreak').style.display = 'block';
         document.getElementsByClassName('hexFilter')[0].placeholder = '# of Subscription';
         document.getElementsByClassName('hexFilter')[1].style.display = 'block';
-    } else {
-        hexClose();
-    }
-    
+    }    
 }
 async function hexView() {
     let inputParams;
+    let blocksPerRequest = 10000;
     document.getElementById('hexFilterButton').innerHTML = 'QUERYING';
     try {
         inputParams = findInputs('hexFilter');
         if (currentZone == 'Approve') {
             hexPage += hexPageSign;
             if (inputParams[0] == '') {inputParams[0] = cTOKEN.address;}
-            let hex = await getApproveHex(inputParams[0], inputParams[1], 10000);
+            let hex = await getApproveHex(inputParams[0], inputParams[1], blocksPerRequest);
             let name = await getTokenName(inputParams[0]);
 
             if (hex != null) {
@@ -514,7 +500,7 @@ async function hexView() {
                 }
             }
 
-        } else if(currentZone == 'Sale') { //fix?
+        } else if(currentZone == 'Sale') {
             let hex = await getSaleHex(inputParams[0], hexPage);
             let names = hex[0];
             let contracts = hex[1];
@@ -582,7 +568,7 @@ async function hexView() {
             while(true) {
                 if (inputParams[0] != '') {
                     hexPage = inputParams[0];
-                    hex = await getEventHex(inputParams[0], inputParams[1], 10000);
+                    hex = await getEventHex(inputParams[0], inputParams[1], blocksPerRequest);
                     setHexBreak(true);
                 } else {
                     loopPage: do {
@@ -594,7 +580,7 @@ async function hexView() {
 
                     try {
                         document.getElementsByClassName('hexFilter')[0].value = hexPage;
-                        hex = await getEventHex(id, inputParams[1], 10000);
+                        hex = await getEventHex(id, inputParams[1], blocksPerRequest);
                     } catch {}
                     setHexBreak(true);
                 }
@@ -632,7 +618,7 @@ async function hexView() {
             }
         }
     } catch(e) {
-        if (e != 'query paused') { //isHexLooping?
+        if (e != 'query paused') {
             isHexLooping = false;
             handleError(e);
         }
@@ -656,7 +642,7 @@ document.getElementById('hexNext').addEventListener("click", async() => {
     if (!isHexLooping) {
         isHexLooping = true;
         hexPageSign = 1;
-        hexPage += Number(hexPageSign); //?
+        hexPage += Number(hexPageSign);
         document.getElementsByClassName('hexFilter')[0].value = '';
         document.getElementsByClassName('hexFilter')[1].value = '';
         removeElements('hexRow');
@@ -883,6 +869,7 @@ document.getElementById('transferOwnership').addEventListener("click", async() =
 //EVENT ZONE
 function toggleSubscribeTo() {
     if (document.getElementById('subscribeToContainer').style.display == 'none') {
+        displayElements('video', 'none');
         document.getElementById('subscribeToContainer').style.display = 'block';
     } else {
         document.getElementById('subscribeToContainer').style.display = 'none';
