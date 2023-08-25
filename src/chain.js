@@ -44,7 +44,6 @@ var chainID;
 // var chainID = provider.getNetwork.chainId;
 
 
-//wallet connect support?
 export var cTOKEN;
 export var cSTAKE;
 export var cSALE;
@@ -64,10 +63,10 @@ function loadContracts() {
 export async function connectWallet() {
     try {
         if (window.ethereum) {
-            addChain('tBNB'); //change for mainnet?
+            addChain('tBNB', window.ethereum); //change for mainnet?
             provider = new ethers.providers.Web3Provider(window.ethereum);
-            chainID = provider.getNetwork.chainId;
             wallet = provider.getSigner((await provider.send("eth_requestAccounts", []))[0]);
+            chainID = provider.getNetwork.chainId;
             loadContracts();
 
             provider.on('accountsChanged', async() => {
@@ -91,9 +90,10 @@ export async function connectWallet() {
 
 export async function connectWalletMobile() { //working? appears twice after close? grey out screen?
     try {
-        provider = await EthereumProvider.init({
+        let providerWC = await EthereumProvider.init({
             projectId: '9cb2b2dd7e7d5b6124d546908cf695bf',
-            chains: [80001],
+            chains: [0x61], //change for mainnet? wait for wc software update?
+            events: ['chainChanged', 'accountsChanged'],
             showQrModal: true,
             qrModalOptions: {
                 themeMode: 'dark',
@@ -105,21 +105,21 @@ export async function connectWalletMobile() { //working? appears twice after clo
             }
         });
 
-        console.log(provider);
-        chainID = provider.chainId;
-        console.log(await provider.enable());
-        wallet = await provider.request({ method: 'eth_requestAccounts' });
-        console.log(wallet);
+        await providerWC.enable();
+        provider = new ethers.providers.Web3Provider(providerWC);
+        wallet = provider.getSigner((await provider.send("eth_requestAccounts", []))[0]);
+        chainID = providerWC.chainId;
+        addChain('tBNB', providerWC);
         loadContracts();
         await getEventPing();
         return true;
     } catch (e) {
-        console.log(e);
+        alert(e);
         return false;
     }  
 }
 
-export async function addChain(nativeCurrency) {
+export async function addChain(nativeCurrency, providerUnwraped) {
     let cID;
     let cName;
     let rUrls;
@@ -131,7 +131,7 @@ export async function addChain(nativeCurrency) {
     if (nativeCurrency == 'tBNB') { 
         cID = '0x61';
         cName = 'BNB Smart Chain Testnet';
-        rUrls = ['https://endpoints.omniatech.io/v1/bsc/testnet/public']; //slow after earlier querys (event)?
+        rUrls = ['https://data-seed-prebsc-2-s1.bnbchain.org:8545']; //slow after earlier querys (event)?
         bUrls = ['https://testnet.bscscan.com'];
         nName = 'testnet BNB';
         nSymbol = 'tBNB';
@@ -140,22 +140,26 @@ export async function addChain(nativeCurrency) {
         //change for mainnet?
     }
 
-    await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-            {
-                chainId: cID,
-                chainName: cName,
-                rpcUrls: rUrls,
-                blockExplorerUrls: bUrls,
-                nativeCurrency: {
-                    name: nName,
-                    symbol: nSymbol,
-                    decimals: nDecimals,
+    if (providerUnwraped == window.ethereum) {
+        await providerUnwraped.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+                {
+                    chainId: cID,
+                    chainName: cName,
+                    rpcUrls: rUrls,
+                    blockExplorerUrls: bUrls,
+                    nativeCurrency: {
+                        name: nName,
+                        symbol: nSymbol,
+                        decimals: nDecimals,
+                    },
                 },
-            },
-        ],
-    });
+            ],
+        });
+    } else {
+
+    }
 };
 
 export async function deploy() {
@@ -185,13 +189,13 @@ export async function deploy() {
 async function getGasObj() {
     let nonce = provider.getTransactionCount(wallet._address);
     let feeData = await provider.getFeeData();
-    if (feeData.maxFeePerGas == null) {
-        if (feeData.gasPrice == null) {
+    if (feeData.gasPrice == null) {
+        if (feeData.maxFeePerGas == null) {
             return null;
         }
-        return {gasPrice: feeData.gasPrice, chainId: chainID, nonce: await nonce};
+        return {maxFeePerGas: feeData.maxFeePerGas, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas, chainId: chainID, nonce: await nonce};
     }
-    return {maxFeePerGas: feeData.maxFeePerGas, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas, chainId: chainID, nonce: await nonce};
+    return {gasPrice: feeData.gasPrice, chainId: chainID, nonce: await nonce};
 }
 
 
