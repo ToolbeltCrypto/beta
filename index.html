@@ -3,10 +3,13 @@
 <!-- add images? how to videos on each dapp? -->
 <h1 class="center" id="mobileWarning">TURN SCREEN TO ENTER LANDSCAPE MODE</h1>
 
+<div style="height: 90%;">
+    <img id="imgBehind" src="avatar.png"></img>
+</div>
 <div id="product">
     <!-- HOME -->
     <div class="zone" id="zoneHome">
-        <h1>Welcome</h1>
+        <h1>Toolbelt</h1>
         <p>Discover an ecosystem built for you.</p>
         <div style="display: flex; justify-content: center;">
             <div id="homeGrid">
@@ -14,7 +17,7 @@
                 <div class="homeContainer" style="grid-column: 1;">
                     <div class="homeContainerToggle" id="homeCommunity"> 
                         <p class="homeTitle">COMMUNITY</p>
-                        <p>Take part in smart contract ownership and ask questions.</p>
+                        <p>Take part in smart contract ownership and community discussions.</p>
                     </div>
 
                     <div class="homeWrap" id="homeWrapCommunity">
@@ -147,7 +150,7 @@
         <p>Join the community and learn something new.</p>
         <div class="center">
             <div class="socialPage">
-                <h1 style="margin-top: 8px; margin-bottom: -16px; margin-left: 192px; margin-right: 192px;"></h1>
+                <div style="margin-top: 8px; margin-bottom: -16px; margin-left: 192px; margin-right: 192px; padding: 8px;"></div>
                 <div class="socialWrap" tabindex="0">
                     <p class="socialTitle">SOCIAL MEDIA</p>
                     <div name="socialWrapToggle">
@@ -540,7 +543,9 @@
 
     <!-- NAV -->
     <div class="navbar">
-        <div name="linkHome" tabindex="0" type="main">HOME</div>
+        <div name="linkHome" tabindex="0" style="padding: 4px;" type="main">
+            <img src="./avatar.png" alt="HOME" style="height: 48px; width: 48px; margin-bottom: -16px; border-radius: 50%;">
+        </div>
         <div class="dropdownContainer">
             <div class="dropdownToggle" tabindex="0">DAPPS</div>
             <div class="dropdownForm" tabindex="0">
@@ -555,7 +560,7 @@
         </div>
         <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
         <div class="dropdownContainer" style="float: right; margin-right: 32px">
-            <div class="dropdownToggle" id="connectWallet" tabindex="0" >CONNECT WALLET</div>
+            <div class="dropdownToggle" id="connectWallet" tabindex="0">CONNECT WALLET</div>
             <div class="dropdownForm" tabindex="0" style="font-family: var(--font1); font-weight: 100;">
                 <div id="connectWalletBrowser">Browser Extension</div>
                 <div id="connectWalletMoblie">Mobile Application</div>

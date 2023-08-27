@@ -7,19 +7,24 @@
         display: block;
     }
 } @media (orientation: landscape) {
-    #mobileWarning {
+    #product {
+        background: var(--white);
+        border-top-left-radius: 32px;
+        border-top-right-radius: 32px;
+        height: 125%;
+    } #mobileWarning {
         display: none;
     }
 }
 
 html {
-    --color1: #4CAF50;
-    --color2: #3e8e41;
-    --color3: #307032;
-    --color4: #224f23;
-    --white: #f2f2f2;
-    --black: #333;
-    --blackT: #33333380;
+    --color1: #e69a62;
+    --color2: #e08159;
+    --color3: #ae5137;
+    --color4: #722b24;
+    --white: #fffefa;
+    --black: #24282e;
+    --darkBlack: #02040f;
     --font1: 'Lucida Sans'; 
     --font2: 'Lucida Grande';
     --font3: 'Lucida Sans Regular';
@@ -37,11 +42,11 @@ html {
     font-size: 24%;
 } h1 {
     font-family: var(--font3);
-    font-size: 36px;
+    font-size: 48px;
     font-weight: 500;
     margin-top: 128px;
     margin-bottom: -4px;
-    padding-top: 20px;
+    padding-top: 128px;
 }
 
 ::-webkit-scrollbar {
@@ -126,11 +131,19 @@ a {
 
 .video {
     display: initial;
-    width: 384px;
-    height: 256px;
+    /* width: 288px;
+    height: 128px; */
+    width: 320px;
+    height: 140px;
     margin: 48px;
     border-radius: 8px;
     border: none;
+} #imgBehind {
+    position: fixed;
+    background-attachment: fixed;
+    z-index: -1;
+    width: 100%;
+    transform: translateY(-18%);
 }
 
 .zone {
@@ -141,7 +154,7 @@ a {
     position: fixed;
     display: inline-block;
     top: 0;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     width: 100%;
     padding: 16px;
 } .navbar [type="main"] {
@@ -157,6 +170,8 @@ a {
 } .navbar [type="main"]:hover {
     background-color: var(--white);
     color: var(--black);
+} .navbar [name="linkHome"]:hover {
+    background-color: inherit;
 }
 
 .dropdownContainer {
@@ -256,7 +271,7 @@ a {
     position: sticky;
     height: max-content;
     width: 380px;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     margin: 32px;
     padding: 8px;
     border-radius: 12px;
@@ -295,7 +310,6 @@ a {
     position: sticky;
     height: max-content;
     width: 380px;
-    background-color: var(--black);
     margin: 32px;
     padding: 8px;
     border-radius: 12px;
@@ -303,7 +317,6 @@ a {
     grid-column: 4;
 } #connectWalletContainer {
     position: fixed;
-    background-color: var(--black);
     height: max-content;
     width: 380px;
     right: 0;
@@ -314,7 +327,7 @@ a {
 }
 
 .socialPage {
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     color: var(--white);
     border-radius: 8px;
     margin: 8px;
@@ -385,7 +398,7 @@ a {
     position: sticky;
     height: max-content;
     width: 380px;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     margin: 32px;
     padding: 8px;
     border-radius: 12px;
@@ -424,7 +437,7 @@ a {
     position: sticky;
     height: max-content;
     width: 380px;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     margin: 32px;
     padding: 8px;
     border-radius: 12px;
@@ -474,7 +487,7 @@ a {
     position: sticky;
     height: max-content;
     width: 380px;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
     margin: 32px;
     padding: 8px;
     border-radius: 12px;
@@ -549,7 +562,7 @@ a {
     width: 84%;
     height: 84%;
     border-radius: 50%;
-    background-color: var(--black);
+    background-color: var(--darkBlack);
 } #stakePerSupply {
     --deg: 0deg;
 } #stakePerTotal {
