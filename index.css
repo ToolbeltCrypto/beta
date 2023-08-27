@@ -11,7 +11,8 @@
         background: var(--white);
         border-top-left-radius: 32px;
         border-top-right-radius: 32px;
-        height: 125%;
+        height: auto;
+        min-height: 100%;
     } #mobileWarning {
         display: none;
     }
@@ -138,7 +139,7 @@ a {
     margin: 48px;
     border-radius: 8px;
     border: none;
-} #imgBehind {
+} #bgimg {
     position: fixed;
     background-attachment: fixed;
     z-index: -1;
@@ -591,14 +592,19 @@ a {
     --deg: 0deg;
 }
 
+/* redo w position relative? */
 #widgetGrid {
-    position: absolute;
+    position: relative;
     display: grid;
     grid-auto-columns: minmax(auto, auto);
     grid-auto-rows: minmax(auto, auto);
+    background-color: var(--white);
 } #homeGrid {
     position: absolute;
     display: grid;
     grid-auto-columns: minmax(auto, auto);
     grid-auto-rows: minmax(auto, auto);
+    background-color: var(--white);
+    padding-left: 100%;
+    padding-right: 100%;
 }
