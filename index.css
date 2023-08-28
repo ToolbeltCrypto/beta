@@ -1,5 +1,7 @@
 @media (orientation: portrait) {
-    #product {
+    #bgimg {
+        display: none;
+    } #product {
         display: none;
     } #mobileWarning {
         font-size: 72px;
@@ -596,15 +598,16 @@ a {
 #widgetGrid {
     position: relative;
     display: grid;
-    grid-auto-columns: minmax(auto, auto);
-    grid-auto-rows: minmax(auto, auto);
+    justify-content: flex-start;
+    overflow: visible;
+    /* grid-auto-columns: minmax(auto, auto);
+    grid-auto-rows: minmax(auto, auto); */
+    grid-template-columns: min-content, min-content, min-content, min-content;
     background-color: var(--white);
 } #homeGrid {
-    position: absolute;
+    position: relative;
     display: grid;
     grid-auto-columns: minmax(auto, auto);
     grid-auto-rows: minmax(auto, auto);
     background-color: var(--white);
-    padding-left: 100%;
-    padding-right: 100%;
 }
