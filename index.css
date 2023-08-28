@@ -10,11 +10,12 @@
     }
 } @media (orientation: landscape) {
     #product {
-        background: var(--white);
-        border-top-left-radius: 32px;
-        border-top-right-radius: 32px;
+        display: inline-block;
+        background-color: var(--white);
         height: auto;
-        min-height: 100%;
+        min-height: 110%;
+        min-width: 100%;
+        margin-top: 128px;
     } #mobileWarning {
         display: none;
     }
@@ -47,7 +48,6 @@ html {
     font-family: var(--font3);
     font-size: 48px;
     font-weight: 500;
-    margin-top: 128px;
     margin-bottom: -4px;
     padding-top: 128px;
 }
@@ -132,6 +132,7 @@ a {
     background-color: var(--color2);
 }
 
+/* fix visual? */
 .video {
     display: initial;
     /* width: 288px;
@@ -153,12 +154,14 @@ a {
     text-align: center;
 }
 
-.navbar {
+.navbarWrapper {
     position: fixed;
     display: inline-block;
     top: 0;
     background-color: var(--darkBlack);
     width: 100%;
+}
+.navbar {
     padding: 16px;
 } .navbar [type="main"] {
     display: inline-block;
@@ -175,6 +178,13 @@ a {
     color: var(--black);
 } .navbar [name="linkHome"]:hover {
     background-color: inherit;
+} .navbarMini {
+    position: fixed;
+    display: inline-block;
+    clear: both;
+    background-color: var(--black);
+    width: 100%;
+    padding: 16px;
 }
 
 .dropdownContainer {
@@ -291,9 +301,6 @@ a {
     padding: 0px;
     height: 32px;
     width: 256px;
-} .optionMenuForm input {
-    margin: 0;
-    margin-top: 4px;
 } .optionMenuTitle {
     color: var(--white);
     font-size: 32px;
@@ -309,6 +316,15 @@ a {
     margin: 0;
     margin-top: 4px;
     margin-bottom: 4px;
+} .optionMenuSearch {
+    margin: 0;
+    margin-top: 4px;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 16px;
+    width: 256px;
+} .optionMenuSearch::placeholder {
+    color: var(--color2);
 } #subscribeToContainer {
     position: sticky;
     height: max-content;
@@ -594,20 +610,15 @@ a {
     --deg: 0deg;
 }
 
-/* redo w position relative? */
 #widgetGrid {
     position: relative;
     display: grid;
     justify-content: flex-start;
     overflow: visible;
-    /* grid-auto-columns: minmax(auto, auto);
-    grid-auto-rows: minmax(auto, auto); */
     grid-template-columns: min-content, min-content, min-content, min-content;
-    background-color: var(--white);
 } #homeGrid {
     position: relative;
     display: grid;
     grid-auto-columns: minmax(auto, auto);
     grid-auto-rows: minmax(auto, auto);
-    background-color: var(--white);
 }

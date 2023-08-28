@@ -532,6 +532,8 @@
                 <p class="optionMenuTitle" id="subscribeToTitle">SUBSCRIBE TO</p>
                 <p class="optionMenuDescription" id="subscribeToDescription">Track blockchain events in a simplified fashion.</p>
                 <br></br>
+                <input class="optionMenuSearch" id="subscribeToSearch" placeholder="Search"></input>
+                <br></br>
                 <button id="subscribeToCreateDelta" type="button">CreateDelta</button>
                 <button id="subscribeToStake" type="button">Stake</button>
                 <br></br>
@@ -542,36 +544,45 @@
 
 
     <!-- NAV -->
-    <div class="navbar">
-        <div name="linkHome" tabindex="0" style="padding: 4px;" type="main">
-            <img src="./avatar.png" alt="HOME" style="height: 48px; width: 48px; margin-bottom: -16px; border-radius: 50%;">
-        </div>
-        <div class="dropdownContainer">
-            <div class="dropdownToggle" tabindex="0">DAPPS</div>
-            <div class="dropdownForm" tabindex="0">
-                <div name="linkAffiliate" tabindex="0">AFFILIATE</div>
-                <div name="linkApprove" tabindex="0">APPROVAL</div>
-                <div name="linkEvent" tabindex="0">EVENT</div>
-                <div name="linkLocker" tabindex="0">LOCKER</div>
-                <div name="linkSale" tabindex="0">PRESALE</div>
-                <div name="linkStake" tabindex="0">STAKING</div>
-                <div name="linkTest" tabindex="0">TESTING</div>
+    <div class="navbarWrapper">
+        <div class="navbar">
+            <div name="linkHome" tabindex="0" style="padding: 4px;" type="main">
+                <img src="./avatar.png" alt="HOME" style="height: 48px; width: 48px; margin-bottom: -16px; border-radius: 50%;">
+            </div>
+            <div class="dropdownContainer">
+                <div class="dropdownToggle" tabindex="0">DAPPS</div>
+                <div class="dropdownForm" tabindex="0">
+                    <div name="linkAffiliate" tabindex="0">AFFILIATE</div>
+                    <div name="linkApprove" tabindex="0">APPROVAL</div>
+                    <div name="linkEvent" tabindex="0">EVENT</div>
+                    <div name="linkLocker" tabindex="0">LOCKER</div>
+                    <div name="linkSale" tabindex="0">PRESALE</div>
+                    <div name="linkStake" tabindex="0">STAKING</div>
+                    <div name="linkTest" tabindex="0">TESTING</div>
+                </div>
+            </div>
+            <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
+            <div class="dropdownContainer" style="float: right; margin-right: 32px">
+                <div class="dropdownToggle" id="connectWallet" tabindex="0">CONNECT WALLET</div>
+                <div class="dropdownForm" tabindex="0" style="font-family: var(--font1); font-weight: 100;">
+                    <div id="connectWalletBrowser">Browser Extension</div>
+                    <div id="connectWalletMoblie">Mobile Application</div>
+                </div>
             </div>
         </div>
-        <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
-        <div class="dropdownContainer" style="float: right; margin-right: 32px">
-            <div class="dropdownToggle" id="connectWallet" tabindex="0">CONNECT WALLET</div>
-            <div class="dropdownForm" tabindex="0" style="font-family: var(--font1); font-weight: 100;">
-                <div id="connectWalletBrowser">Browser Extension</div>
-                <div id="connectWalletMoblie">Mobile Application</div>
-            </div>
+
+        <div class="navbarMini">
+            <!-- mute img -->
+            <!-- browse (optionsMenu) -->
+            <!-- search (optionsMenu) -->
+            <!-- autoplay on connect wallet -->
         </div>
     </div>
 
     <!-- ? add full screen mode for all widgets -->
         <div id="toggleButtonContainer">
             <div class="toggleButton" id="toggleHex" tabindex="0" style="display: none;">&#128824;</div>
-            <div class="toggleButton" id="toggleStats" tabindex="0"  style="display: none;">&#128794;</div>
+            <div class="toggleButton" id="toggleStats" tabindex="0" style="display: none;">&#128794;</div>
             <div class="toggleButton" id="toggleBypass" tabindex="0">B</div>
         </div>
 
