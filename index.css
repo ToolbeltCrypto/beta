@@ -160,8 +160,7 @@ a {
     top: 0;
     background-color: var(--darkBlack);
     width: 100%;
-}
-.navbar {
+} .navbar {
     padding: 16px;
 } .navbar [type="main"] {
     display: inline-block;
@@ -181,10 +180,41 @@ a {
 } .navbarMini {
     position: fixed;
     display: inline-block;
-    clear: both;
     background-color: var(--black);
     width: 100%;
-    padding: 16px;
+    margin: 0px;
+    padding: 24px;
+} #musicToggle {
+    position: fixed;
+    height: 24px;
+    width: 24px;
+    right: 16px;
+    margin: 16px;
+    margin-top: -12px;
+    margin-left: 28px;
+    margin-right: 0px;
+    border-radius: 4px;
+    cursor: pointer;
+} .navbarMini #musicSearch {
+    position: fixed;
+    background-color: var(--darkBlack);
+    width: 128px;
+    right: 64px;
+    margin: 0px;
+    margin-top: -16px;
+    border-radius: 4px;
+} .navbarMini [name="musicCategory"] {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    color: var(--color2);
+    margin: 8px;
+} .navbarMini [name="musicChoice"] {
+    display: block;
+    width: 128px;
+    margin: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .dropdownContainer {
@@ -196,6 +226,7 @@ a {
 } .dropdownContainer:hover .dropdownForm {
     display: block;
 } .dropdownToggle {
+    position: relative;
     margin: 0;
     padding: 14px 28px;
     color: var(--white);
@@ -295,12 +326,6 @@ a {
     padding: 16px 32px;
     padding-bottom: 8px;
     border-radius: inherit;
-} .optionMenuForm [type="button"] {
-    font-family: var(--font3);
-    margin-top: 4px;
-    padding: 0px;
-    height: 32px;
-    width: 256px;
 } .optionMenuTitle {
     color: var(--white);
     font-size: 32px;
@@ -325,6 +350,17 @@ a {
     width: 256px;
 } .optionMenuSearch::placeholder {
     color: var(--color2);
+} .optionMenuChoiceContainer {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+} .optionMenuChoice {
+    display: inline-block;
+    font-family: var(--font3);
+    margin-top: 4px;
+    padding: 0px;
+    height: 32px;
+    width: 256px;
 } #subscribeToContainer {
     position: sticky;
     height: max-content;

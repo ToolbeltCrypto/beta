@@ -1,10 +1,12 @@
 <link rel="stylesheet" href="./index.css"></link>
+<!-- to -->
+<link rel="icon" href="./image/avatar32x32.png" style="border-radius: 50%;">
 
 <!-- add images? how to videos on each dapp? -->
 <h1 class="center" id="mobileWarning">TURN SCREEN TO ENTER LANDSCAPE MODE</h1>
 
 <div id="bgimgContainer" style="height: 90%;">
-    <img id="bgimg" src="avatar.png"></img>
+    <img id="bgimg" src="./image/avatar.png"></img>
 </div>
 <div id="product">
     <!-- HOME -->
@@ -216,13 +218,13 @@
                     <p class="socialTitle">RESEARCH</p>
                         <div name="socialWrapToggle">
 
-                        <a target="_blank" href="./roadmap.png">
+                        <a target="_blank" href="./image/roadmap.png">
                             <div class="socialWrap2">
                                 <p class="socialDescriptor">Roadmap</p>
                             </div>
                         </a>
 
-                        <a target="_blank" href="./whitepaper.pdf">
+                        <a target="_blank" href="./image/whitepaper.pdf">
                             <div class="socialWrap2">
                                 <p class="socialDescriptor">Whitepaper</p>
                             </div>
@@ -321,7 +323,7 @@
             <div style="text-align: center;">
                 <p id="hexDescriptor">Seek blockchain history.</p>
             </div>
-            <form id="hexForm">
+            <form id="hexForm" autocomplete="off">
                 <button id="hexFilterButton" type="button">FILTER</button>
                 <input type="text" class="hexFilter"/>
                 <input type="text" class="hexFilter" placeholder="Maximum Block" style="display: none;"></input>
@@ -376,7 +378,7 @@
 
         <!-- STATS -->
         <div id="statsContainer" style="display: none;">
-            <form id="statsForm">
+            <form id="statsForm" autocomplete="off">
 
                 <div class="statsZone" id="statsStake" style="display: none;">
                     <div style="text-align: center;">
@@ -515,7 +517,7 @@
 
         <!-- MENU -->
         <div id="menuContainer" style="display: none;">
-            <form id="menuForm">
+            <form id="menuForm" autocomplete="off">
                 <p id="menuTitle">TITLE</p>
                 <p id="menuDescription">DESCRIPTION</p>
                 <br></br>
@@ -527,15 +529,15 @@
 
         <!-- SUBSCRIBE TO -->
         <div class="optionMenuContainer" id="subscribeToContainer" style="display: none;">
-            <form class="optionMenuForm" id="subscribeToForm">
+            <form class="optionMenuForm" id="subscribeToForm" autocomplete="off">
                 <button id="subscribeToExit" class="exitButton">X</button>
                 <p class="optionMenuTitle" id="subscribeToTitle">SUBSCRIBE TO</p>
                 <p class="optionMenuDescription" id="subscribeToDescription">Track blockchain events in a simplified fashion.</p>
                 <br></br>
                 <input class="optionMenuSearch" id="subscribeToSearch" placeholder="Search"></input>
                 <br></br>
-                <button id="subscribeToCreateDelta" type="button">CreateDelta</button>
-                <button id="subscribeToStake" type="button">Stake</button>
+                <button class="optionMenuChoice" name="subscribeToChoice" id="subscribeToCreateDelta" type="button" search="createdelta">CreateDelta</button>
+                <button class="optionMenuChoice" name="subscribeToChoice" id="subscribeToStake" type="button" search="stake">Stake</button>
                 <br></br>
             </form>
         </div>
@@ -546,9 +548,7 @@
     <!-- NAV -->
     <div class="navbarWrapper">
         <div class="navbar">
-            <div name="linkHome" tabindex="0" style="padding: 4px;" type="main">
-                <img src="./avatar.png" alt="HOME" style="height: 48px; width: 48px; margin-bottom: -16px; border-radius: 50%;">
-            </div>
+            <img name="linkHome" tabindex="0" src="./image/avatar.png" alt="HOME" style="height: 48px; width: 48px; margin-right: 8px; margin-bottom: -16px; border-radius: 50%; cursor: pointer;">
             <div class="dropdownContainer">
                 <div class="dropdownToggle" tabindex="0">DAPPS</div>
                 <div class="dropdownForm" tabindex="0">
@@ -562,7 +562,7 @@
                 </div>
             </div>
             <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
-            <div class="dropdownContainer" style="float: right; margin-right: 32px">
+            <div class="dropdownContainer" style="float: right; margin-right: 0;">
                 <div class="dropdownToggle" id="connectWallet" tabindex="0">CONNECT WALLET</div>
                 <div class="dropdownForm" tabindex="0" style="font-family: var(--font1); font-weight: 100;">
                     <div id="connectWalletBrowser">Browser Extension</div>
@@ -572,10 +572,25 @@
         </div>
 
         <div class="navbarMini">
-            <!-- mute img -->
-            <!-- browse (optionsMenu) -->
-            <!-- search (optionsMenu) -->
-            <!-- autoplay on connect wallet -->
+            <!-- fix img transparency? -->
+            <audio id="musicAudio"></audio>
+            <div id="musicToggle" tabindex="0" alt="MUTE">🔇</div>
+            <input class="optionMenuSearch" id="musicSearch" autocomplete="off" placeholder="Music Search"></input>
+            <div class="optionMenuChoiceContainer" id="musicChoiceContainer" style="display: none;">
+
+                <div name="musicCategory">Melodic
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="devotion">Devotion</button>
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="inspiration">Inspiration</button>
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="rejuvenation">Rejuvenation</button>
+                </div>
+                
+                <div name="musicCategory">Atmospheric
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="action">Action</button>
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="combination">Combination</button>
+                    <button class="optionMenuChoice" name="musicChoice" type="button" search="disruption">Disruption</button>
+                </div>
+            </div>
+            <!-- shuffle? -->
         </div>
     </div>
 
