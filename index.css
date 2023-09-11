@@ -11,7 +11,7 @@
 } @media (orientation: landscape) {
     #product {
         display: inline-block;
-        background-color: var(--white);
+        background-color: var(--offWhite);
         height: auto;
         min-height: 110%;
         min-width: 100%;
@@ -27,6 +27,7 @@ html {
     --color3: #ae5137;
     --color4: #722b24;
     --white: #fffefa;
+    --offWhite: #fcf8d9ee;
     --black: #24282e;
     --darkBlack: #02040f;
     --font1: 'Lucida Sans'; 
