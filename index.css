@@ -311,6 +311,59 @@ a {
     margin-bottom: -8px;
 }
 
+/* new? */
+#introContainer {
+    text-align: left;
+    margin: 64px;
+} #introTitleContainer {
+    font-size: 32px;
+    font-weight: bold;
+} #introHeadingContainer {
+    font-size: 48px;
+    font-weight: bold;
+    width: 60%;
+} #introHeadingContainer p {
+    margin: 0px;
+} #introSubtitleContainer {
+    font-size: 16px;
+    width: 60%;
+}
+
+.divBreak {
+    background-color: var(--color4);
+    border: none;
+    padding: 20px;
+} .divBreak p {
+    display: inline-block;
+    color: var(--white);
+    font-size: 20px;
+    margin: 0;
+    margin-right: 10%;
+}
+
+.boxContainer {
+    display: inline-block;
+    position: relative;
+    background-color: var(--darkBlack);
+    color: var(--white);
+    width: 288px;
+    padding: 16px;
+    margin: 16px;
+    margin-top: 0px;
+    margin-bottom: 32px;
+    border-radius: 12px;
+    text-align: center;
+    vertical-align: top;
+} .boxContainer .homeTitle {
+    font-family: var(--font3);
+    font-weight: lighter;
+    margin-top: 16px;
+    margin-bottom: 24px;
+} .boxContainer p {
+    margin: 0;
+}
+/* new? */
+
 .optionMenuContainer {
     position: sticky;
     height: max-content;
