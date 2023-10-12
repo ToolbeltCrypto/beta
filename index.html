@@ -12,7 +12,6 @@
 <div id="product">
     <!-- HOME -->
     <div class="zone" id="zoneHome">
-        <!-- new? -->
         <div id="introContainer">
             <div id="introTitleContainer">
                 <p>Toolbelt</p>
@@ -35,7 +34,6 @@
         </div>
         <div style="margin-bottom: 128px;"></div>
 
-        <!-- new? -->
         <div style="display: flex; justify-content: center;">
             <div id="homeGrid">
 
@@ -168,7 +166,6 @@
             </div>
         </div>
 
-        <!-- new? -->
         <div style="margin-bottom: 192px;"></div>
 
         <div style="display: inline-block;">
@@ -217,7 +214,6 @@
             <p style="font-size: 20px;">Find answers, connections, and information you need to grow within decentralized finance.</p>
         </div>
         <div style="margin-bottom: 192px;"></div>
-        <!-- new? -->
     </div>
 
     <!-- SOCIAL -->
@@ -332,6 +328,7 @@
         <h1>Affiliate Zone</h1>
         <p>Refer a friend and earn token fees.</p>
         <button id="setAffiliate" type="button">SETUP AFFILIATE</button>
+        <button id="generateReferral" type="button">GENERATE REFFERAL</button>
         <div></div>
     </div>
 
@@ -342,7 +339,7 @@
         <button id="approve" type="button">APPROVE</button>
         <button id="unapprove" type="button">UNAPPROVE</button>
         <div></div>
-        <iframe class="video" allow="fullscreen;" src="https://www.youtube.com/embed/LuF4OKYJuzA"></iframe>
+        <!-- <iframe class="video" allow="fullscreen;" src="https://www.youtube.com/embed/LuF4OKYJuzA"></iframe> -->
     </div>
 
     <!-- EVENT -->
@@ -353,7 +350,7 @@
         <button id="subscribeEvent" type="button">SUBSCRIBE</button>
         <button id="unsubscribeEvent" type="button">UNSUBSCRIBE</button>
         <div></div>
-        <iframe class="video" allow="fullscreen;" src="https://www.youtube.com/embed/iVoRwq6vONI"></iframe>
+        <!-- <iframe class="video" allow="fullscreen;" src="https://www.youtube.com/embed/iVoRwq6vONI"></iframe> -->
     </div>
 
     <!-- LOCKER -->
@@ -671,11 +668,16 @@
     </div>
 
     <!-- ? add full screen mode for all widgets -->
-        <div id="toggleButtonContainer">
-            <div class="toggleButton" id="toggleHex" tabindex="0" style="display: none;">&#128824;</div>
-            <div class="toggleButton" id="toggleStats" tabindex="0" style="display: none;">&#128794;</div>
-            <div class="toggleButton" id="toggleBypass" tabindex="0">B</div>
-        </div>
+    <div id="toggleButtonContainer">
+        <div class="toggleButton" id="toggleHex" tabindex="0" style="display: none;">&#128824;</div>
+        <div class="toggleButton" id="toggleStats" tabindex="0" style="display: none;">&#128794;</div>
+        <div class="toggleButton" id="toggleBypass" tabindex="0">B</div>
+    </div>
+
+    <div id="alertBox">
+        <p id="alertMessage"></p>
+        <button id="alertExit" class="exitButton" tabindex="0">X</button>
+    </div>
 
     <script type="application/javascript" src="./main.js"></script>
 </div>
