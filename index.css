@@ -720,6 +720,10 @@ a {
     --deg: 0deg;
 } #eventBlockCircle {
     --deg: 0deg;
+} #vestClaimableCircle {
+    --deg: 0deg;
+} #vestTimeCircle {
+    --deg: 0deg;
 }
 
 #widgetGrid {

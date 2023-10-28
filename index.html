@@ -166,40 +166,41 @@
             </div>
         </div>
 
-        <div style="margin-bottom: 192px;"></div>
-
-        <div style="display: inline-block;">
-            <div class="boxContainer">
-                <p class="homeTitle">Utility</p>
-                <div class="boxContainer" style="background-color: var(--white); width: 192px;">
-                    <img src="./image/utility.png" style="height: 128px; width: 160px;"></img>
-                </div>
-                <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--color4);">
-                    <p>Each dapp solves a unique problem leading to a net gain from revenue streams. All revenue is forced into the token to reward holders and stakers.</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="display: inline-block;">
-            <div class="boxContainer">
-                <p class="homeTitle">Empowerment</p>
-                <div class="boxContainer" style="background-color: var(--white); width: 192px;">
-                    <img src="./image/empowerment.png" style="height: 128px; width: 128px;"></img>
-                </div>
-                <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--color4);">
-                    <p>All smart contract changes can be voted on, empowering the community with full control of the token. We set the standard for fluid decentralization.</p>
+        <div style="margin-bottom: 128px;"></div>
+        <div style="background-color: var(--color4); padding-top: 64px; padding-bottom: 64px;">
+            <div style="display: inline-block;">
+                <div class="boxContainer">
+                    <p class="homeTitle">Utility</p>
+                    <div class="boxContainer" style="background-color: var(--white); width: 192px;">
+                        <img src="./image/utility.png" style="height: 128px; width: 160px;"></img>
+                    </div>
+                    <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--black);">
+                        <p>Each dapp solves a unique problem leading to a net gain from revenue streams. All revenue is forced into the token to reward holders and stakers.</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div style="display: inline-block;">
-            <div class="boxContainer">
-                <p class="homeTitle">Transparency</p>
-                <div class="boxContainer" style="background-color: var(--white); width: 192px;">
-                    <img src="./image/transparency.png" style="height: 128px; width: 128px;"></img>
+            <div style="display: inline-block;">
+                <div class="boxContainer">
+                    <p class="homeTitle">Empowerment</p>
+                    <div class="boxContainer" style="background-color: var(--white); width: 192px;">
+                        <img src="./image/empowerment.png" style="height: 128px; width: 128px;"></img>
+                    </div>
+                    <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--black);">
+                        <p>All smart contract changes can be voted on, empowering the community with full control of the token. We set the standard for fluid decentralization.</p>
+                    </div>
                 </div>
-                <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--color4);">
-                    <p>With no authority to undermine the power of community members, the team has no incentive to hide or censor any information.</p>
+            </div>
+
+            <div style="display: inline-block;">
+                <div class="boxContainer">
+                    <p class="homeTitle">Transparency</p>
+                    <div class="boxContainer" style="background-color: var(--white); width: 192px;">
+                        <img src="./image/transparency.png" style="height: 128px; width: 128px;"></img>
+                    </div>
+                    <div class="boxContainer" style="height: 128px; width: 192px; background-color: var(--black);">
+                        <p>With no authority to undermine the power of community members, the team has no incentive to hide or censor any information.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -387,6 +388,14 @@
         <button id="claimStake" type="button">CLAIM</button>
     </div>
 
+    <!-- VEST -->
+    <div class="zone" id="zoneVest" style="display: none;">
+        <h1>Vesting Zone</h1>
+        <p>Distribute tokens over a period of time.</p>
+        <button id="createVest" type="button">CREATE VEST</button>
+        <button id="claimVest" type="button">CLAIM VEST</button>
+    </div>
+
 
     <!-- WIDGET -->
     <div id="widgetGrid">
@@ -441,7 +450,16 @@
                             <th class="hexCenter">HASH</th>
                         </tr>
                     </table>
-            </div>
+                </div>
+
+                <div class="hexZone" id="hexVest" style="display: none;">
+                    <table class="hexTable">
+                        <tr>
+                            <th class="hexCenter">ID</th>
+                            <th>TOKEN</th>
+                        </tr>
+                    </table>
+                </div>
 
                 <br></br>
                 <button id="hexPrevious" type="button" style="width: 144px;">PREVIOUS</button>
@@ -585,6 +603,23 @@
                     <p class="statsDescriptor">VALUES:</p>
                     <p id="eventValues" style="font-size: 9px; color: var(--color1);"></p>
                 </div>
+
+                <div class="statsZone" id="statsVest" style="display: none;">
+                    <div style="text-align: center;">
+                        <p class="description">Read your vesting agreement.</p>
+                    </div>
+                    <button class="statsView" type="button">VIEW</button>
+                    <input class="statsInputVest" placeholder="ID of Vesting"></input>
+                    <br></br>
+
+                    <div class="chart"><div class="circle" id="vestClaimableCircle" style="background-color: var(--white);"><div class="innerCircle"></div></div></div>
+                    <p class="statsDescriptor">CLAIMABLE:</p>
+                    <p id="vestClaimable" style="font-size: 14px; color: var(--color1);"></p>
+
+                    <div class="chart"><div class="circle" id="vestTimeCircle" style="background-color: var(--white);"><div class="innerCircle"></div></div></div>
+                    <p class="statsDescriptor">TIME LEFT:</p>
+                    <p id="vestTime" style="font-size: 14px; color: var(--color1);"></p>
+                </div>
             </form>
         </div>
 
@@ -631,7 +666,9 @@
                     <div name="linkLocker" tabindex="0">LOCKER</div>
                     <div name="linkSale" tabindex="0">PRESALE</div>
                     <div name="linkStake" tabindex="0">STAKING</div>
+                    <div name="linkVest" tabindex="0">VESTING</div>
                     <div name="linkTest" tabindex="0">TESTING</div>
+
                 </div>
             </div>
             <div name="linkSocial" tabindex="0" type="main">PORTAL</div>
